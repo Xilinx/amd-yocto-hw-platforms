@@ -23,7 +23,7 @@ for { set i 0 } { $i < $argc } { incr i } {
  }
 	        
 create_project $proj_name $proj_dir/$proj_name -part xczu7ev-ffvc1156-2-e
-set_property board_part xilinx.com:zcu104:part0:* [current_project]
+set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "MPSoC_ext_platform" -mode batch
 instantiate_example_design -template xilinx.com:design:MPSoC_ext_platform:1.0 -design MPSoC_ext_platform -options { Clock_Options.VALUE {clk_out1 100.000 0 false clk_out2 200.000 1 true clk_out3 400.000 2 false} Include_DDR.VALUE false}
 
