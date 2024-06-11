@@ -1,5 +1,5 @@
-
-#Beta devices not enabled.  
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: Apache-2.0
 
 set proj_board [get_board_parts "*:zcu104:*" -latest_file_version]
         

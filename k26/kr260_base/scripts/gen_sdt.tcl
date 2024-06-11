@@ -1,3 +1,6 @@
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 # parse arguments
 for { set i 0 } { $i < $argc } { incr i } {
   # xsa name

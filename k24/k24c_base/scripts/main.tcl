@@ -1,5 +1,6 @@
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: Apache-2.0
 
-#Beta devices not enabled.  
 
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
 

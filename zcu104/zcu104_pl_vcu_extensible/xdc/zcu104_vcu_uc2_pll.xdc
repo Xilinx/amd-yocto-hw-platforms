@@ -1,7 +1,9 @@
+# Copyright (C) 2024, Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
 ###################
 # Pin Constraints #
 ###################
-#
 #
 
 set_max_delay -datapath_only -from [get_clocks mmcm_clkout0] -to [get_clocks mmcm_clkout2] 3.231
