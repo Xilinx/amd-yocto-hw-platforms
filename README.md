@@ -1,5 +1,5 @@
-# amd-hw-examples
-To Generate the hardware project for amd-xilinx platforms
+# amd-yocto-hw-platforms
+To Generate the hardware project for amd-yocto-hw platforms
 
 cd to specific board directory and run command make all to generate hardware project and sdt files.
 
