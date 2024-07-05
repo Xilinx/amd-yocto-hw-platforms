@@ -6,7 +6,7 @@ VIVADO = $(XILINX_VIVADO)/bin/vivado
 XSCT = $(XILINX_VITIS)/bin/xsct
 
 JOBS ?= 8
-PROJ_NAME ?= vek280_base_seg
+PROJ_NAME ?= vek280_bram_gpio_seg
 
 VIV_PRJ_DIR = hw_project
 SDT_PRJ_DIR = hw_project_sdt
@@ -21,7 +21,7 @@ help:
 	@echo 'Usage:'
 	@echo ''
 	@echo '  make xsa'
-	@echo '    Generate vek280 base segmented xsa.'
+	@echo '    Generate vek280 bram and gpio segmented xsa.'
 	@echo '  make sdt'
 	@echo '    Generate the SDT files from XSA'
 	@echo '  make all'
