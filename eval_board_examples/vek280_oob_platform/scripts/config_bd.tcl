@@ -710,6 +710,21 @@ proc create_root_design { parentCell } {
   set_property PFM.AXI_PORT {S00_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S01_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S02_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S03_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S04_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S05_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S06_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S07_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S08_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S09_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S10_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S11_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S12_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S13_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S14_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S15_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S16_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S17_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S18_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S19_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S20_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S21_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S22_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S23_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S24_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S25_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S26_AXI {memport "S_AXI_NOC" sptag "LPDDR"} S27_AXI {memport "S_AXI_NOC" sptag "LPDDR"}} [get_bd_cells /noc_lpddr4]
   set_property PFM.AXI_PORT {M03_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"} M04_AXI {memport "M_AXI_GP" sptag "" memory "" is_range "true"}} [get_bd_cells /smartconnect_2]
 
+#segmented configuration
+set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {300} write_bw {300} read_avg_burst {4} write_avg_burst {4} initial_boot {true}} M00_INI {read_bw {300} write_bw {300} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S00_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {300} write_bw {300} initial_boot {true}} M04_INI {read_bw {300} write_bw {300} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S01_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {300} write_bw {300} initial_boot {true}} M07_INI {read_bw {300} write_bw {300} initial_boot {true}} M04_INI {read_bw {300} write_bw {300} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S02_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M08_INI {read_bw {300} write_bw {300} initial_boot {true}} M03_INI {read_bw {300} write_bw {300} initial_boot {true}} M04_INI {read_bw {300} write_bw {300} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S03_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {300} write_bw {300} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S04_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {300} write_bw {300} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S05_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {300} write_bw {300} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S06_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {300} write_bw {300} read_avg_burst {4} write_avg_burst {4} initial_boot {true}} M00_INI {read_bw {300} write_bw {300} initial_boot {true}}}] [get_bd_intf_pins /cips_noc/S07_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500} initial_boot {false}}}] [get_bd_intf_pins /cips_noc/S08_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {500} write_bw {500} initial_boot {false}}}] [get_bd_intf_pins /cips_noc/S09_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M03_INI {read_bw {500} write_bw {500} initial_boot {false}}}] [get_bd_intf_pins /cips_noc/S10_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M05_INI {read_bw {500} write_bw {500} initial_boot {false}}}] [get_bd_intf_pins /cips_noc/S11_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M06_INI {read_bw {500} write_bw {500} initial_boot {false}}}] [get_bd_intf_pins /cips_noc/S12_AXI]
+
 
   validate_bd_design
   save_bd_design
