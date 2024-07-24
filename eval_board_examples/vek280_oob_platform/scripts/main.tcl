@@ -66,6 +66,9 @@ save_bd_design
 validate_bd_design
 generate_target all [get_files ${proj_dir}/${proj_name}/${proj_name}.srcs/sources_1/bd/$proj_name/${proj_name}.bd]
 
+#enable segmented configuration
+set_property platform.pre_create_project_tcl_hook     "./scripts/enable_soc_boot_flow_prj.tcl"  [current_project]
+
 file mkdir ${proj_dir}/${proj_name}/$output_dir
 set outputs_dir ${proj_dir}/${proj_name}/$output_dir
 
