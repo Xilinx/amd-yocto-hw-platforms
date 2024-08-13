@@ -32,7 +32,7 @@ The following platforms are supported:
 
 ## Required Tools
 
-This repo requires vivado and vitis tools to build the hardware projects and SDT files.
+This repo requires vivado tools to build the hardware projects and SDT files.
 
 ## Build Instructions
 
