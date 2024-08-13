@@ -3,7 +3,7 @@
 
 RM = rm -rf
 VIVADO = $(XILINX_VIVADO)/bin/vivado
-XSCT = $(XILINX_VITIS)/bin/xsct
+XSCT = $(XILINX_VIVADO)/xsct-trim/bin/xsct
 
 JOBS ?= 8
 PROJ_NAME ?= k24i_prod

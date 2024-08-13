@@ -5,7 +5,7 @@
 
 #TOOLS
 VIVADO  = $(XILINX_VIVADO)/bin/vivado
-XSCT    = $(XILINX_VITIS)/bin/xsct
+XSCT    = $(XILINX_VIVADO)/xsct-trim/bin/xsct
 RM = rm -rf
 
 #PFM DIR VARIABLES
