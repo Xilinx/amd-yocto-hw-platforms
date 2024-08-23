@@ -14,25 +14,34 @@ git clone --recursive https://github.com/Xilinx/amd-yocto-hw-platforms.git
 
 ## Contents
 
-The following platforms are supported:
+This repository supports the following platforms and their respective examples:
 
 1. Eval Boards
-    1. zcu104
-    2. vek280
+    1. zcu104_base
+    2. vek280_base
 2. Kria
     1. k26
         1. k26_base
         2. k26_prod
-        3. kv260 starterkit
-        4. kr260_starterkit
+        3. kv260_base
+        4. kr260_base
     2. k24
-        1. k24_base
-        2. k24_prod
-        3. kd240_starterkit
+        1. k24c_base
+        2. k24i_prod
+        3. kd240_base
+3. Eval Board Examples
+    1. zcu104_pl_vcu_extensible	(Extensible Platform with VCU in PL)
+    2. vek280_bram_gpio		(Segmented Platform with AXI_GPIO and BRAM in PL )
+    3. vek280_oob_platform		(Segmented Extensible Platform with AIE and VDU in PL)
+    4. vek280_aie_vdu_example		(Example to build AIE design and App with vek280_oob_platform using Vitis Tools)
 
 ## Required Tools
 
 This repo requires vivado tools to build the hardware projects and SDT files.
+
+```
+source <vivado-install-path>/settings64.sh
+```
 
 ## Build Instructions
 
