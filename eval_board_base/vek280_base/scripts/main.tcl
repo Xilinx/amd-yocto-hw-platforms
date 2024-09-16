@@ -94,6 +94,10 @@ launch_runs impl_1 -to_step write_bitstream
 wait_on_run impl_1
         
 open_run impl_1        
+
+set_property lock true [get_noc_net_routes -of [get_noc_logical_path *${design_name}*]]
+write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
+
 write_hw_platform -fixed -include_bit -file $outputs_dir/${proj_name}.xsa
 validate_hw_platform -verbose $outputs_dir/${proj_name}.xsa
             

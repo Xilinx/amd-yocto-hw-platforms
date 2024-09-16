@@ -142,6 +142,10 @@ set_property platform.vendor "xilinx" [current_project]
 set_property platform.version "1.0" [current_project]
             
 open_run impl_1        
+
+set_property lock true [get_noc_net_routes -of [get_noc_logical_path *cips_noc*]]
+write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
+
 write_hw_platform -force -include_bit -file $outputs_dir/${proj_name}.xsa
 validate_hw_platform -verbose $outputs_dir/${proj_name}.xsa
             
