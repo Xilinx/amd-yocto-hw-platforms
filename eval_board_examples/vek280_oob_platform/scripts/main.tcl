@@ -100,24 +100,25 @@ foreach ip [get_ips] {
 
 close $fd
 
-    
-set_property synth_checkpoint_mode Hierarchical [get_files ${proj_dir}/${proj_name}/${proj_name}.srcs/sources_1/bd/$proj_name/${proj_name}.bd]
-launch_runs synth_1 -jobs 32
-wait_on_run synth_1
-    
-launch_runs impl_1 -to_step write_device_image
+## Moving to deferred mode, uncomment below for dynamic reload ##
 
-wait_on_run impl_1
+#set_property synth_checkpoint_mode Hierarchical [get_files ${proj_dir}/${proj_name}/${proj_name}.srcs/sources_1/bd/$proj_name/${proj_name}.bd]
+#launch_runs synth_1 -jobs 32
+#wait_on_run synth_1
+    
+#launch_runs impl_1 -to_step write_device_image
+
+#wait_on_run impl_1
                        
 
-set files [glob ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/*.rcdo ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/*.rnpi ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/*.pdi] 
-foreach fl $files {
-    set newfl [string map {_wrapper {}} [file tail $fl]]
-    file copy $fl $outputs_dir/$newfl
-}
+#set files [glob ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/*.rcdo ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/*.rnpi ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/*.pdi] 
+#foreach fl $files {
+#    set newfl [string map {_wrapper {}} [file tail $fl]]
+#    file copy $fl $outputs_dir/$newfl
+#}
                        
-file copy -force ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/gen_files ./$outputs_dir/
-file copy -force ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/static_files ./$outputs_dir/
+#file copy -force ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/gen_files ./$outputs_dir/
+#file copy -force ${proj_dir}/${proj_name}/${proj_name}.runs/impl_1/static_files ./$outputs_dir/
         
 set_property platform.board_id $proj_name [current_project]
             
@@ -141,12 +142,12 @@ set_property platform.vendor "xilinx" [current_project]
             
 set_property platform.version "1.0" [current_project]
             
-open_run impl_1        
+## Moving to deferred mode, uncomment below for dynamic reload ##
+#open_run impl_1
+#set_property lock true [get_noc_net_routes -of [get_noc_logical_path -filter initial_boot]]
+#write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
 
-set_property lock true [get_noc_net_routes -of [get_noc_logical_path *cips_noc*]]
-write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
-
-write_hw_platform -force -include_bit -file $outputs_dir/${proj_name}.xsa
+write_hw_platform -hw -force $outputs_dir/${proj_name}.xsa
 validate_hw_platform -verbose $outputs_dir/${proj_name}.xsa
             
 exit
