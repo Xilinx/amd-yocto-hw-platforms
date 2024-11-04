@@ -141,7 +141,7 @@ set versal_cips_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:versal_cips vers
     CONFIG.NUM_CLKS {9} \
     CONFIG.NUM_MC {2} \
     CONFIG.NUM_MCP {4} \
-    CONFIG.NUM_MI {4} \
+    CONFIG.NUM_MI {5} \
     CONFIG.NUM_SI {8} \
     CONFIG.sys_clk0_BOARD_INTERFACE {lpddr4_clk1} \
     CONFIG.sys_clk1_BOARD_INTERFACE {lpddr4_clk2} \
@@ -256,21 +256,34 @@ set_property -dict [ list \
    CONFIG.ASSOCIATED_BUSIF {M00_AXI:M01_AXI:M02_AXI:M03_AXI} \
  ] [get_bd_pins /axi_noc_0/aclk8]
 
-  # Create instance: axi_gpio_0, and set properties
-  set axi_gpio_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio axi_gpio_0 ]
+  # Create instance: axi_gpio_pb, and set properties
+  set axi_gpio_pb [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio axi_gpio_pb ]
   set_property -dict [list \
-    CONFIG.GPIO2_BOARD_INTERFACE {gpio_dp} \
+    CONFIG.GPIO_BOARD_INTERFACE {gpio_pb} \
+    CONFIG.USE_BOARD_FLOW {true} \
+  ] $axi_gpio_pb
+
+  # Create instance: axi_gpio_dp, and set properties
+  set axi_gpio_dp [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio axi_gpio_dp ]
+  set_property -dict [list \
+    CONFIG.GPIO_BOARD_INTERFACE {gpio_dp} \
+    CONFIG.USE_BOARD_FLOW {true} \
+  ] $axi_gpio_dp
+
+  # Create instance: axi_gpio_led, and set properties
+  set axi_gpio_led [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio axi_gpio_led ]
+  set_property -dict [list \
     CONFIG.GPIO_BOARD_INTERFACE {gpio_led} \
     CONFIG.USE_BOARD_FLOW {true} \
-  ] $axi_gpio_0
+  ] $axi_gpio_led
 
 
-  # Create instance: axi_gpio_0_smc, and set properties
-  set axi_gpio_0_smc [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect axi_gpio_0_smc ]
+  # Create instance: axi_gpio_pb_smc, and set properties
+  set axi_gpio_pb_smc [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect axi_gpio_pb_smc ]
   set_property -dict [list \
     CONFIG.NUM_MI {1} \
     CONFIG.NUM_SI {1} \
-  ] $axi_gpio_0_smc
+  ] $axi_gpio_pb_smc
 
 
   # Create instance: rst_versal_cips_0_99M, and set properties
@@ -284,18 +297,19 @@ set_property -dict [ list \
   set_property CONFIG.MEMORY_TYPE {True_Dual_Port_RAM} $axi_bram_ctrl_0_bram
 
 
-  # Create instance: axi_gpio_1, and set properties
-  set axi_gpio_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_gpio axi_gpio_1 ]
-  set_property -dict [list \
-    CONFIG.GPIO_BOARD_INTERFACE {gpio_pb} \
-    CONFIG.USE_BOARD_FLOW {true} \
-  ] $axi_gpio_1
-# Create instance: axi_gpio_1_smc, and set properties
-  set axi_gpio_1_smc [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect axi_gpio_1_smc ]
+# Create instance: axi_gpio_dp_smc, and set properties
+  set axi_gpio_dp_smc [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect axi_gpio_dp_smc ]
   set_property -dict [list \
     CONFIG.NUM_MI {1} \
     CONFIG.NUM_SI {1} \
-  ] $axi_gpio_1_smc
+  ] $axi_gpio_dp_smc
+
+# Create instance: axi_gpio_led_smc, and set properties
+  set axi_gpio_led_smc [ create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect axi_gpio_led_smc ]
+  set_property -dict [list \
+    CONFIG.NUM_MI {1} \
+    CONFIG.NUM_SI {1} \
+  ] $axi_gpio_led_smc
 
 
   # Create instance: axi_uartlite_0, and set properties
@@ -316,18 +330,20 @@ set_property -dict [ list \
 # Create interface connections
   connect_bd_intf_net -intf_net axi_bram_ctrl_0_BRAM_PORTA [get_bd_intf_pins axi_bram_ctrl_0_bram/BRAM_PORTA] [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTA]
   connect_bd_intf_net -intf_net axi_bram_ctrl_0_BRAM_PORTB [get_bd_intf_pins axi_bram_ctrl_0_bram/BRAM_PORTB] [get_bd_intf_pins axi_bram_ctrl_0/BRAM_PORTB]
-  connect_bd_intf_net -intf_net axi_gpio_0_GPIO [get_bd_intf_ports gpio_led] [get_bd_intf_pins axi_gpio_0/GPIO]
-  connect_bd_intf_net -intf_net axi_gpio_0_GPIO2 [get_bd_intf_ports gpio_dp] [get_bd_intf_pins axi_gpio_0/GPIO2]
-  connect_bd_intf_net -intf_net axi_gpio_0_smc_M00_AXI [get_bd_intf_pins axi_gpio_0/S_AXI] [get_bd_intf_pins axi_gpio_0_smc/M00_AXI]
-  connect_bd_intf_net -intf_net axi_gpio_1_GPIO [get_bd_intf_ports gpio_pb] [get_bd_intf_pins axi_gpio_1/GPIO]
-  connect_bd_intf_net -intf_net axi_gpio_1_smc_M00_AXI [get_bd_intf_pins axi_gpio_1/S_AXI] [get_bd_intf_pins axi_gpio_1_smc/M00_AXI]
+  connect_bd_intf_net -intf_net axi_gpio_led_GPIO [get_bd_intf_ports gpio_led] [get_bd_intf_pins axi_gpio_led/GPIO]
+  connect_bd_intf_net -intf_net axi_gpio_led_smc_M00_AXI [get_bd_intf_pins axi_gpio_led/S_AXI] [get_bd_intf_pins axi_gpio_led_smc/M00_AXI]
+  connect_bd_intf_net -intf_net axi_gpio_dp_GPIO [get_bd_intf_ports gpio_dp] [get_bd_intf_pins axi_gpio_dp/GPIO]
+  connect_bd_intf_net -intf_net axi_gpio_pb_smc_M00_AXI [get_bd_intf_pins axi_gpio_pb/S_AXI] [get_bd_intf_pins axi_gpio_pb_smc/M00_AXI]
+  connect_bd_intf_net -intf_net axi_gpio_pb_GPIO [get_bd_intf_ports gpio_pb] [get_bd_intf_pins axi_gpio_pb/GPIO]
+  connect_bd_intf_net -intf_net axi_gpio_dp_smc_M00_AXI [get_bd_intf_pins axi_gpio_dp/S_AXI] [get_bd_intf_pins axi_gpio_dp_smc/M00_AXI]
   connect_bd_intf_net -intf_net axi_noc_0_CH0_LPDDR4_0 [get_bd_intf_ports ch0_lpddr4_trip1] [get_bd_intf_pins axi_noc_0/CH0_LPDDR4_0]
   connect_bd_intf_net -intf_net axi_noc_0_CH0_LPDDR4_1 [get_bd_intf_ports ch0_lpddr4_trip2] [get_bd_intf_pins axi_noc_0/CH0_LPDDR4_1]
   connect_bd_intf_net -intf_net axi_noc_0_CH1_LPDDR4_0 [get_bd_intf_ports ch1_lpddr4_trip1] [get_bd_intf_pins axi_noc_0/CH1_LPDDR4_0]
   connect_bd_intf_net -intf_net axi_noc_0_CH1_LPDDR4_1 [get_bd_intf_ports ch1_lpddr4_trip2] [get_bd_intf_pins axi_noc_0/CH1_LPDDR4_1]
-  connect_bd_intf_net -intf_net axi_noc_0_M00_AXI [get_bd_intf_pins axi_gpio_0_smc/S00_AXI] [get_bd_intf_pins axi_noc_0/M00_AXI]
+  connect_bd_intf_net -intf_net axi_noc_0_M00_AXI [get_bd_intf_pins axi_gpio_pb_smc/S00_AXI] [get_bd_intf_pins axi_noc_0/M00_AXI]
   connect_bd_intf_net -intf_net axi_noc_0_M01_AXI [get_bd_intf_pins axi_bram_ctrl_0/S_AXI] [get_bd_intf_pins axi_noc_0/M01_AXI]
-  connect_bd_intf_net -intf_net axi_noc_0_M02_AXI [get_bd_intf_pins axi_gpio_1_smc/S00_AXI] [get_bd_intf_pins axi_noc_0/M02_AXI]
+  connect_bd_intf_net -intf_net axi_noc_0_M02_AXI [get_bd_intf_pins axi_gpio_dp_smc/S00_AXI] [get_bd_intf_pins axi_noc_0/M02_AXI]
+  connect_bd_intf_net -intf_net axi_noc_0_M04_AXI [get_bd_intf_pins axi_gpio_led_smc/S00_AXI] [get_bd_intf_pins axi_noc_0/M04_AXI]
   connect_bd_intf_net -intf_net axi_noc_0_M03_AXI [get_bd_intf_pins axi_uartlite_0_smc/S00_AXI] [get_bd_intf_pins axi_noc_0/M03_AXI]
   connect_bd_intf_net -intf_net axi_uartlite_0_UART [get_bd_intf_ports uart1_bank401] [get_bd_intf_pins axi_uartlite_0/UART]
   connect_bd_intf_net -intf_net axi_uartlite_0_smc_M00_AXI [get_bd_intf_pins axi_uartlite_0/S_AXI] [get_bd_intf_pins axi_uartlite_0_smc/M00_AXI]
@@ -343,7 +359,7 @@ set_property -dict [ list \
   connect_bd_intf_net -intf_net versal_cips_0_PMC_NOC_AXI_0 [get_bd_intf_pins versal_cips_0/PMC_NOC_AXI_0] [get_bd_intf_pins axi_noc_0/S05_AXI]
 
 # Create port connections
-  connect_bd_net -net rst_versal_cips_0_99M_peripheral_aresetn [get_bd_pins rst_versal_cips_0_99M/peripheral_aresetn] [get_bd_pins axi_gpio_0/s_axi_aresetn] [get_bd_pins axi_gpio_0_smc/aresetn] [get_bd_pins axi_bram_ctrl_0/s_axi_aresetn] [get_bd_pins axi_gpio_1/s_axi_aresetn] [get_bd_pins axi_gpio_1_smc/aresetn] [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins axi_uartlite_0_smc/aresetn]
+  connect_bd_net -net rst_versal_cips_0_99M_peripheral_aresetn [get_bd_pins rst_versal_cips_0_99M/peripheral_aresetn] [get_bd_pins axi_gpio_pb/s_axi_aresetn] [get_bd_pins axi_gpio_pb_smc/aresetn] [get_bd_pins axi_bram_ctrl_0/s_axi_aresetn] [get_bd_pins axi_gpio_dp/s_axi_aresetn] [get_bd_pins axi_gpio_dp_smc/aresetn] [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins axi_uartlite_0_smc/aresetn] [get_bd_pins axi_gpio_led/s_axi_aresetn] [get_bd_pins axi_gpio_led_smc/aresetn]
   connect_bd_net -net versal_cips_0_fpd_axi_noc_axi0_clk [get_bd_pins versal_cips_0/fpd_axi_noc_axi0_clk] [get_bd_pins axi_noc_0/aclk6]
   connect_bd_net -net versal_cips_0_fpd_axi_noc_axi1_clk [get_bd_pins versal_cips_0/fpd_axi_noc_axi1_clk] [get_bd_pins axi_noc_0/aclk7]
   connect_bd_net -net versal_cips_0_fpd_cci_noc_axi0_clk [get_bd_pins versal_cips_0/fpd_cci_noc_axi0_clk] [get_bd_pins axi_noc_0/aclk0]
@@ -351,12 +367,12 @@ set_property -dict [ list \
   connect_bd_net -net versal_cips_0_fpd_cci_noc_axi2_clk [get_bd_pins versal_cips_0/fpd_cci_noc_axi2_clk] [get_bd_pins axi_noc_0/aclk2]
   connect_bd_net -net versal_cips_0_fpd_cci_noc_axi3_clk [get_bd_pins versal_cips_0/fpd_cci_noc_axi3_clk] [get_bd_pins axi_noc_0/aclk3]
   connect_bd_net -net versal_cips_0_lpd_axi_noc_clk [get_bd_pins versal_cips_0/lpd_axi_noc_clk] [get_bd_pins axi_noc_0/aclk4]
-  connect_bd_net -net versal_cips_0_pl0_ref_clk [get_bd_pins versal_cips_0/pl0_ref_clk] [get_bd_pins axi_gpio_0/s_axi_aclk] [get_bd_pins axi_noc_0/aclk8] [get_bd_pins rst_versal_cips_0_99M/slowest_sync_clk] [get_bd_pins axi_gpio_0_smc/aclk] [get_bd_pins axi_bram_ctrl_0/s_axi_aclk] [get_bd_pins axi_gpio_1/s_axi_aclk] [get_bd_pins axi_gpio_1_smc/aclk] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins axi_uartlite_0_smc/aclk]
+  connect_bd_net -net versal_cips_0_pl0_ref_clk [get_bd_pins versal_cips_0/pl0_ref_clk] [get_bd_pins axi_gpio_pb/s_axi_aclk] [get_bd_pins axi_noc_0/aclk8] [get_bd_pins rst_versal_cips_0_99M/slowest_sync_clk] [get_bd_pins axi_gpio_pb_smc/aclk] [get_bd_pins axi_bram_ctrl_0/s_axi_aclk] [get_bd_pins axi_gpio_dp/s_axi_aclk] [get_bd_pins axi_gpio_dp_smc/aclk] [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins axi_uartlite_0_smc/aclk] [get_bd_pins axi_gpio_led/s_axi_aclk] [get_bd_pins axi_gpio_led_smc/aclk]
   connect_bd_net -net versal_cips_0_pl0_resetn [get_bd_pins versal_cips_0/pl0_resetn] [get_bd_pins rst_versal_cips_0_99M/ext_reset_in]
   connect_bd_net -net versal_cips_0_pmc_axi_noc_axi0_clk [get_bd_pins versal_cips_0/pmc_axi_noc_axi0_clk] [get_bd_pins axi_noc_0/aclk5]
 
 #segmented configuration
-set_property -dict [list CONFIG.CONNECTIONS {M03_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} M01_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} M02_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} M00_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} MC_3 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S00_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M03_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} M04_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} M01_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} M02_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} M00_AXI {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} MC_3 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S00_AXI]
 set_property -dict [list CONFIG.CONNECTIONS {MC_2 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S01_AXI]
 set_property -dict [list CONFIG.CONNECTIONS {MC_0 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S02_AXI]
 set_property -dict [list CONFIG.CONNECTIONS {MC_1 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S03_AXI]
