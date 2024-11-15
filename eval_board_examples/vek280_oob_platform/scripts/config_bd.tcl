@@ -701,7 +701,8 @@ proc create_root_design { parentCell } {
   current_bd_instance $oldCurInst
 
   # Create PFM attributes
-  set_property PFM_NAME {xilinx.com:xd:xilinx_vek280_oob_platform:2024} [get_files [current_bd_design].bd]
+  set VIVADO_VER [lindex [regexp -all -inline {([0-9]{4}\.[0-9]+)$} $::env(XILINX_VIVADO)] 0]
+  set_property PFM_NAME "xilinx.com:xd:xilinx_vek280_oob_platform:$VIVADO_VER" [get_files [current_bd_design].bd]
   set_property PFM.AXI_PORT {S00_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S01_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S02_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S03_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S04_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S05_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"}} [get_bd_cells /ConfigNoc]
   set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_parent]
   set_property PFM.CLOCK {clk_out1 {id "1" is_default "false" proc_sys_reset "psr_100mhz" status "fixed"} clk_out2 {id "0" is_default "false" proc_sys_reset "psr_150mhz" status "fixed"} clk_out3 {id "2" is_default "true" proc_sys_reset "psr_300mhz" status "fixed"} clk_out4 {id "3" is_default "false" proc_sys_reset "psr_75mhz" status "fixed"} clk_out5 {id "4" is_default "false" proc_sys_reset "psr_200mhz" status "fixed"} clk_out6 {id "5" is_default "false" proc_sys_reset "psr_400mhz" status "fixed"} clk_out7 {id "6" is_default "false" proc_sys_reset "psr_600mhz" status "fixed"}} [get_bd_cells /clk_wizard_0]
