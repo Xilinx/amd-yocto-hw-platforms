@@ -3,7 +3,7 @@
 
 RM = rm -rf
 VIVADO = $(XILINX_VIVADO)/bin/vivado
-XSCT = $(XILINX_VIVADO)/xsct-trim/bin/xsct
+SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 
 JOBS ?= 8
 PROJ_NAME ?= kr260_base
@@ -14,7 +14,7 @@ VIV_SCRIPTS_DIR = scripts
 
 VIV_XSA = $(VIV_PRJ_DIR)/*.xsa
 VIV_SRC = $(VIV_SCRIPTS_DIR)/main.tcl
-XSCT_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
+SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
 .PHONY: help
 help:
@@ -37,7 +37,7 @@ $(VIV_XSA): $(VIV_SRC)
 	$(VIVADO) -mode batch -notrace -source $(VIV_SRC) -tclargs -jobs $(JOBS) -proj_name $(PROJ_NAME)
 
 sdt:
-	$(XSCT) $(XSCT_SRC) -xsa_name $(PROJ_NAME)
+	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
 
 .PHONY: clean
 clean:

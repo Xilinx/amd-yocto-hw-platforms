@@ -5,7 +5,7 @@
 
 #TOOLS
 VIVADO  = $(XILINX_VIVADO)/bin/vivado
-XSCT    = $(XILINX_VIVADO)/xsct-trim/bin/xsct
+SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 RM = rm -rf
 
 #PFM DIR VARIABLES
@@ -17,7 +17,7 @@ XGEMM_DIR = $(PWD)/plnx-aie-examples/designs/xgemm-gmio
 AIEARCH ?= aie-ml
 
 VIV_SCRIPTS_DIR = scripts
-XSCT_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
+SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 SDT_PRJ_DIR = hw_project_sdt
 
 #Hw artifacts

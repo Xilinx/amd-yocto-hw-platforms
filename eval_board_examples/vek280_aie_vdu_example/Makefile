@@ -36,7 +36,7 @@ xsa:
 	$(MAKE) -C $(XGEMM_DIR) AIEARCH=$(AIEARCH)
 
 sdt:
-	$(XSCT) $(XSCT_SRC) -xsa_path $(XSA_PATH)
+	$(SDTGEN) $(SDTGEN_SRC) -xsa_path $(XSA_PATH)
 
 .PHONY: clean
 clean:

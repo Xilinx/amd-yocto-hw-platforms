@@ -10,8 +10,8 @@ for { set i 0 } { $i < $argc } { incr i } {
   }
 }
 
-sdtgen set_dt_param -debug enable
-sdtgen set_dt_param -dir ./hw_project_sdt
-sdtgen set_dt_param -xsa $xsa_path
-sdtgen set_dt_param -board_dts versal-vek280-revb
-sdtgen generate_sdt
+ set_dt_param -debug enable
+ set_dt_param -dir ./hw_project_sdt
+ set_dt_param -xsa $xsa_path
+ set_dt_param -board_dts versal-vek280-revb
+ generate_sdt
