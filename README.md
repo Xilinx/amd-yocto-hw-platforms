@@ -16,10 +16,10 @@ git clone --recursive https://github.com/Xilinx/amd-yocto-hw-platforms.git
 
 This repository supports the following platforms and their respective examples:
 
-1. Eval Boards
+1. Eval Boards Base
     1. zcu104_base
     2. vek280_base
-2. Kria
+2. Kria Base
     1. k26
         1. k26_base
         2. k26_prod
