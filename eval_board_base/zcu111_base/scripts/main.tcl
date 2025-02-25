@@ -25,7 +25,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 create_project $proj_name $proj_dir/$proj_name -part xczu28dr-ffvg1517-2-e
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "mpsoc_preset" -mode batch
-instantiate_example_design -template xilinx.com:design:mpsoc_preset:1.0 -design mpsoc_preset
+instantiate_example_design -template xilinx.com:design:mpsoc_preset:1.0 -design mpsoc_preset -options { Preset.VALUE MPSoC_PL}
 
 update_compile_order -fileset sources_1
  
