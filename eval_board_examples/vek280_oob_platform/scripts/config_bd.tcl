@@ -838,7 +838,7 @@ proc create_root_design { parentCell } {
   current_bd_instance $oldCurInst
 
   # Create PFM attributes
-  set VIVADO_VER [lindex [regexp -all -inline {([0-9]{4}\.[0-9]+)$} $::env(XILINX_VIVADO)] 0]
+  set VIVADO_VER [lindex [split $::env(XILINX_VIVADO) "/"] end-1]
   set_property PFM_NAME "xilinx.com:xd:xilinx_vek280_oob_platform:$VIVADO_VER" [get_files [current_bd_design].bd]
   set_property PFM.AXI_PORT {S00_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S01_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S02_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S03_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S04_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"} S05_AXI {memport "S_AXI_NOC" sptag "S_AXI_AIE" auto "false" memory "ai_engine_0 AIE_ARRAY_0"}} [get_bd_cells /ConfigNoc]
   set_property PFM.IRQ {intr {id 0 range 32}} [get_bd_cells /axi_intc_parent]
