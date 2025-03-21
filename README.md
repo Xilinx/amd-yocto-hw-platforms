@@ -54,7 +54,8 @@ cd eval_board_base/vek280_base
 make all
 ```
 
-Note:Refer make help in specific directory for more information.
+Note:Refer make help in specific directory for more information.  
+Note:Refer UG904 for JOBS and TCL option for threads https://docs.amd.com/r/en-US/ug904-vivado-implementation
 
 ## License
 
