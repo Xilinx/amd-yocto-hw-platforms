@@ -5,7 +5,7 @@ RM = rm -rf
 VIVADO = $(XILINX_VIVADO)/bin/vivado
 SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 
-JOBS ?= 8
+JOBS ?= 1
 PROJ_NAME ?= vek280_bram_gpio_seg
 
 VIV_PRJ_DIR = hw_project

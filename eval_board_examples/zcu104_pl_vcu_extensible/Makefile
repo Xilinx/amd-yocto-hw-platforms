@@ -5,7 +5,7 @@ RM = rm -rf
 VIVADO = $(XILINX_VIVADO)/bin/vivado
 SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 
-JOBS ?= 8
+JOBS ?= 1
 PROJ_NAME ?= zcu104_pl_vcu_extensible
 
 VIV_PRJ_DIR = hw_project
