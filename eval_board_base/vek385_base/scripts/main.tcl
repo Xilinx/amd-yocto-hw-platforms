@@ -84,6 +84,9 @@ if {[file exist $golden_ncrpath] } {
         puts "Golden NOC Solution File Not Found in Vivado"
 }
 
+#workaround to multi-gmio
+set_param noc.enableNOCClockGating false
+
 launch_runs impl_1 -to_step write_bitstream
             
 wait_on_run impl_1
