@@ -8,7 +8,7 @@ help:
 	@echo 'Usage:'
 	@echo ''
 	@echo '  make xsa'
-	@echo '    Generate vek280 aie vdu example using vitis flow.'
+	@echo '    Generate AIE gmio example using vitis flow.'
 	@echo '  make sdt'
 	@echo '    Generate the SDT files from XSA'
 	@echo '  make all'
@@ -18,7 +18,7 @@ help:
 	@echo ''
 
 ifndef BASE_XSA
-$(error export BASE_XSA pointing xsa generated using vek280_oob_platform)
+$(error export BASE_XSA pointing xsa generated using any extensible ced platform)
 endif
 
 ifndef SYSROOT

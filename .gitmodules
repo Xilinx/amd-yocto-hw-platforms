@@ -1,4 +1,3 @@
-[submodule "eval_board_examples/vek280_aie_vdu_example/plnx-aie-examples"]
-	path = eval_board_examples/vek280_aie_vdu_example/plnx-aie-examples
-	url = https://github.com/Xilinx/plnx-aie-examples.git
-	branch = main
+[submodule "eval_board_examples/aie_gmio_example/gmio-example"]
+	path = eval_board_examples/aie_gmio_example/gmio-example
+	url = https://gitenterprise.xilinx.com/ai-engine/xgemm
