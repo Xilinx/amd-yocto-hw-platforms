@@ -9,17 +9,17 @@ SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 RM = rm -rf
 
 #PFM DIR VARIABLES
-PFMS_DIR = $(PWD)/plnx-aie-examples/platforms
+PFMS_DIR = $(PWD)/gmio-example/platforms
 BASE_PLATFORM = $(PFMS_DIR)/base
 
 #APP VARIABLES
-XGEMM_DIR = $(PWD)/plnx-aie-examples/designs/xgemm-gmio
-AIEARCH ?= aie-ml
+XGEMM_DIR = $(PWD)/gmio-example/designs/xgemm-gmio
+AIEARCH ?= aieml
 
 VIV_SCRIPTS_DIR = scripts
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 SDT_PRJ_DIR = hw_project_sdt
 
 #Hw artifacts
-XSA_DIR = $(PWD)/plnx-aie-examples/designs/xgemm-gmio/hw
+XSA_DIR = $(PWD)/gmio-example/designs/xgemm-gmio/hw
 XSA_PATH ?= $(XSA_DIR)/hw.xsa
