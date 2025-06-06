@@ -76,7 +76,7 @@ launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
 
 #Run Implementation
-set golden_ncr $env(XILINX_VIVADO)/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen2_platform/1.1/vek385_golden_ncr/vek385_*.ncr
+set golden_ncr {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen2_platform/1.1/vek385_golden_ncr/vek385_*.ncr}
 set golden_ncrpath [glob -nocomplain -- $golden_ncr]
 
 if {[file exist $golden_ncrpath] } {
