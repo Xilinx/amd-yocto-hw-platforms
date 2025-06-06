@@ -2,7 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
-xhub::update [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.1]
+xhub::update [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.0]
 
 set proj_name project_1
 set proj_dir ./hw_project
