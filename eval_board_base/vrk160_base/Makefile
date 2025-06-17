@@ -32,7 +32,7 @@ help:
 	@echo ''
 
 .PHONY: all
-all: xsa sdt
+all: xsa sdt checkpdi
 
 xsa: $(VIV_XSA)
 $(VIV_XSA): $(VIV_SRC)
@@ -40,6 +40,18 @@ $(VIV_XSA): $(VIV_SRC)
 
 sdt:
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
+
+GOLDEN_UNIQUE_ID := $(shell basename /proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/Vivado/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen1_platform/1.0/vrk160_golden_ncr/vrk160_*.ncr .ncr | cut -d "_" -f3 )
+PDI_UNIQUE_ID := $(shell $(BOOTGEN) -arch versal -read $(PDI_FILE) | grep 0x18700000 | grep unique | cut -d ":" -f3 | tr -d ' ')
+
+checkpdi:
+	$(info PDI_UNIQUE_ID:$(PDI_UNIQUE_ID))
+	$(info GOLDEN_UNIQUE_ID:$(GOLDEN_UNIQUE_ID))
+ifeq (${PDI_UNIQUE_ID},${GOLDEN_UNIQUE_ID})
+	$(info UNIQUE ID MATCHED)
+else
+	$(error UNIQUE ID DID NOT MATCH)
+endif
 
 
 .PHONY: clean
