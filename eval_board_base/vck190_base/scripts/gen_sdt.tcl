@@ -16,5 +16,5 @@ sdtgen set_dt_param -debug enable
 sdtgen set_dt_param -zocl enable
 sdtgen set_dt_param -dir ./hw_project_sdt
 sdtgen set_dt_param -xsa $xsa_path
-sdtgen set_dt_param -board_dts versal-vck190-reva-x-ebm-02-reva
+sdtgen set_dt_param -board_dts versal-vck190-rev1.1-x-ebm-01-reva
 sdtgen generate_sdt

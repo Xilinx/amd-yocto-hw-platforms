@@ -67,7 +67,7 @@ launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
 
 #Run Implementation
-set golden_ncr $env(XILINX_VIVADO)/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen1_platform/vck190_golden_ncr/vck190_*.ncr
+set golden_ncr $env(XILINX_VIVADO)/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen1_platform/1.0/vck190_golden_ncr/vck190_*.ncr
 set golden_ncrpath [glob -nocomplain -- $golden_ncr]
 
 if {[file exist $golden_ncrpath] } {
