@@ -75,18 +75,6 @@ close $fd
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
 
-#Run Implementation
-set golden_ncr {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen2_platform/1.1/vek385_golden_ncr/vek385_*.ncr}
-set golden_ncrpath [glob -nocomplain -- $golden_ncr]
-
-if {[file exist $golden_ncrpath] } {
-        puts "Applying Golden NOC Solution File $golden_ncrpath"
-	set_property NOC_SOLUTION_FILE [file normalize $golden_ncrpath] [get_runs impl_1]
-
-} else {
-        puts "Golden NOC Solution File Not Found in Vivado"
-}
-
 #workaround to multi-gmio
 set_param noc.enableNOCClockGating false
 
