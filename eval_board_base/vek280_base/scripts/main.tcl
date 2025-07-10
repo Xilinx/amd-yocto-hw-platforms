@@ -22,10 +22,14 @@ for { set i 0 } { $i < $argc } { incr i } {
   }
  }
 
+#startegy for 2025.1_async, once ceds merged to store then update below with ced install commands
+set_param board.repoPaths {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/data/xhub/boards/XilinxBoardStore}
+set_param ced.repoPaths {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/data/xhub/ced/XilinxCEDStore}
+
 create_project $proj_name $proj_dir/$proj_name -part xcve2802-vsvh1760-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "versal_gen1_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_gen1_platform:1.0 -design versal_gen1_platform
+instantiate_example_design -template xilinx.com:design:versal_gen1_platform:1.1 -design versal_gen1_platform
 
 update_compile_order -fileset sources_1
 
@@ -65,17 +69,6 @@ close $fd
 
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
-
-#Run Implementation
-set golden_ncr $env(XILINX_VIVADO)/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen1_platform/vek280_golden_ncr/vek280_*.ncr
-set golden_ncrpath [glob -nocomplain -- $golden_ncr]
-
-if {[file exist $golden_ncrpath] } {
-        puts "Applying Golden NOC Solution File $golden_ncrpath"
-        set_property NOC_SOLUTION_FILE [file normalize $golden_ncrpath] [get_runs impl_1]
-} else {
-        puts "Golden NOC Solution File Not Found in Vivado"
-}
 
 launch_runs impl_1 -to_step write_bitstream
 
