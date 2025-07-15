@@ -25,7 +25,7 @@ get_sdt_source:
 	if [ ! -d "./system-device-tree-xlnx" ];then \
 		git clone https://gitenterprise.xilinx.com/decoupling/system-device-tree-xlnx.git; \
 	fi
-	cd system-device-tree-xlnx && git checkout 2025.1.1 && git pull && git log -n1 --pretty=oneline;
+	cd system-device-tree-xlnx && git checkout xlnx_rel_v2025.1 && git pull && git log -n1 --pretty=oneline;
 
 .PHONY: help
 help:
