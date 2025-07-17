@@ -1,8 +1,12 @@
 # Copyright (C) 2024, Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
+file mkdir git_hub
+set_property XSTORES_PATH [pwd]/git_hub [current_vivado_preferences]
+set_param ced.repoPaths [pwd]/git_hub/ced_store/Vivado_example_project
+set_param board.repoPaths [pwd]/git_hub/board_store/xilinx_board_store
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
-xhub::update [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.0]
+xhub::install [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.1]
 
 set proj_name project_1
 set proj_dir ./hw_project
@@ -22,9 +26,6 @@ for { set i 0 } { $i < $argc } { incr i } {
     set jobs [lindex $argv $i]
   }
  }
-
-#startegy for 2025.1_async, once ceds merged to store then update below with ced install commands
-set_param ced.repoPaths {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/data/xhub/ced/XilinxCEDStore}
 
 create_project $proj_name $proj_dir/$proj_name -part xc2ve3858-ssva2112-2MP-e-S
 create_bd_design "versal_gen2_platform" -mode batch
