@@ -43,7 +43,7 @@ help:
 .PHONY: all
 all: xsa sdt checkpdi
 
-xsa: $(VIV_XSA)
+xsa: get_sdt_source $(VIV_XSA)
 $(VIV_XSA): $(VIV_SRC)
 	$(VIVADO) -mode batch -notrace -source $(VIV_SRC) -tclargs -jobs $(JOBS) -proj_name $(PROJ_NAME)
 
