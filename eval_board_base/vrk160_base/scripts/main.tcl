@@ -23,10 +23,6 @@ for { set i 0 } { $i < $argc } { incr i } {
   }
  }
 
-#startegy for 2025.1_async, once ceds merged to store then update below with ced install commands
-set_param board.repoPaths {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/data/xhub/boards/XilinxBoardStore}
-set_param ced.repoPaths {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/data/xhub/ced/XilinxCEDStore}
-
 create_project $proj_name $proj_dir/$proj_name -part xcvr1602-vsva2488-2MP-e-S-es1
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "versal_gen1_platform" -mode batch
