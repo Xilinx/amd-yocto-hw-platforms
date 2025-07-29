@@ -2,6 +2,7 @@
 # SPDX-License-Identifier: Apache-2.0
 
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
+set proj_board [get_board_parts "*:vmk180_newl:*" -latest_file_version]
 
 set proj_name project_1
 set proj_dir ./hw_project
@@ -22,15 +23,35 @@ for { set i 0 } { $i < $argc } { incr i } {
   }
  }
 
-create_project $proj_name $proj_dir/$proj_name -part xcvm1802-vsva2197-2MP-e-S
-set_property board_part xilinx.com:$board:part0:* [current_project]
-create_bd_design "versal_gen1_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_gen1_platform:1.1 -design versal_gen1_platform -options { Include_AIE.VALUE false}
+create_project -name $proj_name -force -dir $proj_dir/$proj_name -part [get_property PART_NAME [get_board_parts $proj_board]]
+set_property board_part $proj_board [current_project]
 
+update_ip_catalog
+
+# Create block diagram design and set as current design
+set design_name $proj_name
+create_bd_design $proj_name
+current_bd_design $proj_name
+
+# Set current bd instance as root of current design
+set parentCell [get_bd_cells /]
+set parentObj [get_bd_cells $parentCell]
+current_bd_instance $parentObj
+
+source ./scripts/config_bd.tcl
+
+save_bd_design
+
+make_wrapper -files [get_files ${proj_dir}/${proj_name}/${proj_name}.srcs/sources_1/bd/$proj_name/${proj_name}.bd] -top
+import_files -force -norecurse ${proj_dir}/${proj_name}/${proj_name}.srcs/sources_1/bd/$proj_name/hdl/${proj_name}_wrapper.v
+update_compile_order
+set_property segmented_configuration true [current_project]
+set_property top ${proj_name}_wrapper [current_fileset]
 update_compile_order -fileset sources_1
 
 save_bd_design
 validate_bd_design
+generate_target all [get_files ${proj_dir}/${proj_name}/${proj_name}.srcs/sources_1/bd/$proj_name/${proj_name}.bd]
 file mkdir $proj_dir/$proj_name/$output_dir
 
 set outputs_dir $proj_dir/$proj_name/$output_dir
