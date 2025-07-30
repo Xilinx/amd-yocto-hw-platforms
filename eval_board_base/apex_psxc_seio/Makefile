@@ -22,7 +22,7 @@ SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 # Clone the apex xsa sources
 get_xsa_source:
 	if [ ! -d "./PVS_APEX_DEV" ];then \
-		git clone https://gitenterprise.xilinx.com/SSAV/PVS_APEX_DEV.git; \
+		git clone git@gitenterprise.xilinx.com:SSAV/PVS_APEX_DEV.git; \
 	fi
 	cd PVS_APEX_DEV && git pull && git log -n1 --pretty=oneline;
 
