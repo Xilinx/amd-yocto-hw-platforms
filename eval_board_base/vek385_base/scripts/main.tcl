@@ -25,7 +25,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 	        
 create_project $proj_name $proj_dir/$proj_name -part xc2ve3858-ssva2112-2MP-e-S
 create_bd_design "versal_gen2_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_gen2_platform:1.1 -design versal_gen2_platform -options { Board_selection.VALUE VEK385 Design_type.VALUE Base}
+instantiate_example_design -template xilinx.com:design:versal_gen2_platform:1.2 -design versal_gen2_platform -options { Board_selection.VALUE VEK385 Design_type.VALUE Base}
 
 # Run custom tcl hooks post CED design
 if [file exist "./scripts/post_ced_config.tcl"] {
