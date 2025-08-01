@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
-xhub::update [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.1]
 
 set proj_name project_1
 set proj_dir ./hw_project
@@ -71,18 +70,6 @@ close $fd
 
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
-
-#Run Implementation
-set golden_ncr $env(XILINX_VIVADO)/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen2_platform/1.1/vek385_golden_ncr/vek385_*.ncr
-set golden_ncrpath [glob -nocomplain -- $golden_ncr]
-
-if {[file exist $golden_ncrpath] } {
-        puts "Applying Golden NOC Solution File $golden_ncrpath"
-	set_property NOC_SOLUTION_FILE [file normalize $golden_ncrpath] [get_runs impl_1]
-
-} else {
-        puts "Golden NOC Solution File Not Found in Vivado"
-}
 
 launch_runs impl_1 -to_step write_bitstream
             

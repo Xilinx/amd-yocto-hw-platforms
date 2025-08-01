@@ -42,7 +42,7 @@ $(VIV_XSA): $(VIV_SRC)
 sdt:
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
 
-GOLDEN_UNIQUE_ID := $(shell basename $(XILINX_VIVADO)/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen2_platform/1.1/vek385_golden_ncr/vek385_*.ncr .ncr | cut -d "_" -f3 )
+GOLDEN_UNIQUE_ID := $(shell basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/vek385_golden_ncr/vek385_*.ncr .ncr | cut -d "_" -f3 )
 PDI_UNIQUE_ID := $(shell $(BOOTGEN) -arch versal_2ve_2vm -read $(PDI_FILE) | grep 0x18700000 | grep unique | cut -d ":" -f3 | tr -d ' ')
 
 checkpdi:
