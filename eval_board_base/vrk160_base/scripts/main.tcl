@@ -26,7 +26,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 create_project $proj_name $proj_dir/$proj_name -part xcvr1602-vsva2488-2MP-e-S-es1
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "versal_gen1_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_gen1_platform:1.0 -design versal_gen1_platform
+instantiate_example_design -template xilinx.com:design:versal_gen1_platform:1.1 -design versal_gen1_platform
 
 update_compile_order -fileset sources_1
 
@@ -65,19 +65,6 @@ close $fd
 
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
-
-#Run Implementation
-set golden_ncr {/proj/xbuilds/2025.2_daily_latest/installs/lin64/2025.2/Vivado/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen1_platform/1.0/vrk160_golden_ncr/vrk160_*.ncr}
-set golden_ncrpath [glob -nocomplain -- $golden_ncr]
-
-if {[file exist $golden_ncrpath] } {
-        puts "Applying Golden NOC Solution File $golden_ncrpath"
-	set_property NOC_SOLUTION_FILE [file normalize $golden_ncrpath] [get_runs impl_1]
-
-} else {
-        puts "Golden NOC Solution File Not Found in Vivado"
-}
-
 
 launch_runs impl_1 -to_step write_bitstream
 
