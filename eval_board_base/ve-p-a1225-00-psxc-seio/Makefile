@@ -31,7 +31,7 @@ help:
 	@echo 'Usage:'
 	@echo ''
 	@echo '  make xsa'
-	@echo '    Generate APEX base XSA.'
+	@echo '    Generate ve-p-a1225-00 base XSA.'
 	@echo '  make sdt'
 	@echo '    Generate the SDT files from XSA'
 	@echo '  make all'
