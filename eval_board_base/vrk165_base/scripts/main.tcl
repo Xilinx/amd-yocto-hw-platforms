@@ -1,6 +1,10 @@
 # Copyright (C) 2024, Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: Apache-2.0
 enable_beta_device *
+file mkdir git_hub
+set_property XSTORES_PATH [pwd]/git_hub [current_vivado_preferences]
+set_param ced.repoPaths [pwd]/git_hub/ced_store/Vivado_example_project
+set_param board.repoPaths [pwd]/git_hub/board_store/xilinx_board_store
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
 xhub::update [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen1_platform:1.1]
 
