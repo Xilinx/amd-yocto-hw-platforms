@@ -6,7 +6,7 @@ set_property XSTORES_PATH [pwd]/git_hub [current_vivado_preferences]
 set_param ced.repoPaths [pwd]/git_hub/ced_store/Vivado_example_project
 set_param board.repoPaths [pwd]/git_hub/board_store/xilinx_board_store
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
-xhub::install [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.2]
+#xhub::install [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.1]
 xhub::update [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.2]
 
 set proj_name project_1
@@ -30,7 +30,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 
 create_project $proj_name $proj_dir/$proj_name -part xc2ve3858-ssva2112-2MP-e-S
 create_bd_design "versal_gen2_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_gen2_platform:1.2 -design versal_gen2_platform -options { Board_selection.VALUE VEK385 Design_type.VALUE Base}
+instantiate_example_design -template xilinx.com:design:versal_gen2_platform:1.1 -design versal_gen2_platform -options { Board_selection.VALUE VEK385 Design_type.VALUE Base}
 
 # Run custom tcl hooks post CED design
 if [file exist "./scripts/post_ced_config.tcl"] {
