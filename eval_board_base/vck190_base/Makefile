@@ -42,7 +42,7 @@ $(VIV_XSA): $(VIV_SRC)
 sdt:
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
 
-GOLDEN_UNIQUE_ID := $(shell basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vck190_*.ncr .ncr | cut -d "_" -f3 )
+GOLDEN_UNIQUE_ID := $(shell basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vck190_*.ncr .ncr | cut -d "_" -f4 )
 PDI_UNIQUE_ID := $(shell $(BOOTGEN) -arch versal -read $(PDI_FILE) | grep 0x18700000 | grep unique | cut -d ":" -f3 | tr -d ' ')
 
 checkpdi:
