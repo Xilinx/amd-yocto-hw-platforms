@@ -24,8 +24,8 @@ for { set i 0 } { $i < $argc } { incr i } {
 
 create_project $proj_name $proj_dir/$proj_name -part xcve2802-vsvh1760-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
-create_bd_design "versal_gen1_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_gen1_platform:1.1 -design versal_gen1_platform
+create_bd_design "versal_comn_platform" -mode batch
+instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Include_AIE.VALUE true}
 
 update_compile_order -fileset sources_1
 
