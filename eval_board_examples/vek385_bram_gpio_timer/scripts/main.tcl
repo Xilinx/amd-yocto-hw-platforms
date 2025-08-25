@@ -2,7 +2,6 @@
 # SPDX-License-Identifier: Apache-2.0
 
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
-xhub::update [xhub::get_xitems xilinx.com:Vivado_example_project:versal_gen2_platform:1.0]
 
 set proj_name project_1
 set proj_dir ./hw_project
@@ -24,8 +23,9 @@ for { set i 0 } { $i < $argc } { incr i } {
  }
 
 create_project $proj_name $proj_dir/$proj_name -part xc2ve3858-ssva2112-2MP-e-S
-create_bd_design "versal_gen2_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_gen2_platform:1.0 -design versal_gen2_platform -options { Board_selection.VALUE VEK385 Design_type.VALUE Base}
+set_property board_part xilinx.com:$board:part0:* [current_project]
+create_bd_design "versal_comn_platform" -mode batch
+instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Include_AIE.VALUE true}
 
 #Add Axi_timer PL IP and connect it.
 create_bd_cell -type ip -vlnv xilinx.com:ip:axi_timer:2.0 axi_timer_0
