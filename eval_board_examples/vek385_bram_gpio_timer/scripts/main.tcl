@@ -28,13 +28,13 @@ create_bd_design "versal_comn_platform" -mode batch
 instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Include_AIE.VALUE true}
 
 #Add Axi_timer PL IP and connect it.
-create_bd_cell -type ip -vlnv xilinx.com:ip:axi_timer:2.0 axi_timer_0
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_timer:* axi_timer_0
 
-set_property CONFIG.NUM_MI {5} [get_bd_cells ctrl_smc]
+set_property CONFIG.NUM_MI {12} [get_bd_cells ctrl_smc]
 
-connect_bd_intf_net [get_bd_intf_pins axi_timer_0/S_AXI] [get_bd_intf_pins ctrl_smc/M04_AXI]
-connect_bd_net [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins clkx5_wiz_0/clk_out1]
-connect_bd_net [get_bd_pins axi_timer_0/s_axi_aresetn] [get_bd_pins rst_clk/peripheral_aresetn]
+connect_bd_intf_net [get_bd_intf_pins axi_timer_0/S_AXI] [get_bd_intf_pins ctrl_smc/M11_AXI]
+connect_bd_net [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins clk_wizard_0/clk_out1]
+connect_bd_net [get_bd_pins axi_timer_0/s_axi_aresetn] [get_bd_pins ps_wizard_0/pl0_resetn]
 connect_bd_net [get_bd_pins axi_timer_0/interrupt] [get_bd_pins ps_wizard_0/pl_fpd_irq0]
 assign_bd_address
 
@@ -75,18 +75,6 @@ close $fd
 
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
-
-#Run Implementation
-set golden_ncr $env(XILINX_VIVADO)/data/xhub/ced/XilinxCEDStore/ced/Xilinx/IPI/Versal_gen2_platform/vek385_golden_ncr/vek385_*.ncr
-set golden_ncrpath [glob -nocomplain -- $golden_ncr]
-
-if {[file exist $golden_ncrpath] } {
-        puts "Applying Golden NOC Solution File $golden_ncrpath"
-	set_property NOC_SOLUTION_FILE [file normalize $golden_ncrpath] [get_runs impl_1]
-
-} else {
-        puts "Golden NOC Solution File Not Found in Vivado"
-}
 
 launch_runs impl_1 -to_step write_bitstream
 
