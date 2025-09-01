@@ -26,6 +26,13 @@ get_xsa_source:
 	fi
 	cd PVS_APEX_DEV && git pull && git log -n1 --pretty=oneline;
 
+# Clone the System Device-tree source
+get_sdt_source:
+	if [ ! -d "./system-device-tree-xlnx" ];then \
+		git clone https://gitenterprise.xilinx.com/decoupling/system-device-tree-xlnx.git; \
+	fi
+	cd system-device-tree-xlnx && git checkout master-next && git pull && git log -n1 --pretty=oneline;
+
 .PHONY: help
 help:
 	@echo 'Usage:'
@@ -42,10 +49,10 @@ help:
 .PHONY: all
 all: xsa sdt
 
-xsa: get_xsa_source
+xsa: get_sdt_source get_xsa_source
 	cd $(XSA_SRC) && $(VIVADO) -mode batch -notrace -source $(VIV_SRC)
 
-sdt:
+sdt: get_sdt_source
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_path $(XSA_SRC)/$(PROJ_NAME).xsa
 
 .PHONY: clean
