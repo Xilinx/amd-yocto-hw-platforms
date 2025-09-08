@@ -353,6 +353,14 @@ proc create_root_design { parentCell } {
    CONFIG.CONNECTIONS {MC_0 {read_bw {500} write_bw {500} read_avg_burst {4} write_avg_burst {4}}} \
  ] [get_bd_intf_pins $noc_lpddr2/S01_INI]
 
+  # configure ps_lpd to higher memory address
+  set_property -dict [ list \
+   CONFIG.CATEGORY {ps_rpu} \
+   CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500} initial_boot {true}} M05_INI {read_bw {500} write_bw {500} initial_boot {true}} M00_INI {read_bw {500} write_bw {500}    initial_boot {true}}} \
+  ] [get_bd_intf_pins /Master_NoC/S06_AXI]
+   delete_bd_objs [get_bd_addr_segs] [get_bd_addr_segs -excluded]
+   assign_bd_address
+
   # Create instance: aggr_noc, and set properties
   set aggr_noc [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc: aggr_noc ]
   set_property -dict [list \
