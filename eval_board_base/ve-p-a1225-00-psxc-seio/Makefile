@@ -1,6 +1,8 @@
 # Copyright (C) 2024, Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
+include platform.mk
+
 RM = rm -rf
 VIVADO = $(XILINX_VIVADO)/bin/vivado
 SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
