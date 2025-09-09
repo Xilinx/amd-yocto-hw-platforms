@@ -66,6 +66,9 @@ close $fd
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
 
+#workaround to multi-gmio
+set_param noc.enableNOCClockGating false
+
 launch_runs impl_1 -to_step write_bitstream
 
 wait_on_run impl_1
