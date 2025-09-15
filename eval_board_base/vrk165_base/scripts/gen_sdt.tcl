@@ -16,5 +16,5 @@ set_dt_param -debug enable
 set_dt_param -zocl enable
 set_dt_param -dir ./hw_project_sdt
 set_dt_param -xsa $xsa_path
-set_dt_param -board_dts versal-vmk180-rev1.1-x-ebm-01-reva
+set_dt_param -board_dts versal-vrk160-reva
 generate_sdt
