@@ -763,7 +763,7 @@ CONFIG.PSU__USE__S_AXI_GP6  {0} \
   connect_bd_net -net zynq_ultra_ps_e_0_pl_clk1 [get_bd_pins clk_wiz_1/clk_in1] [get_bd_pins zynq_ultra_ps_e_0/pl_clk1]
   connect_bd_net [get_bd_pins clk_wiz_1/resetn] [get_bd_pins proc_sys_reset_2_0/ext_reset_in] [get_bd_pins zynq_ultra_ps_e_0/pl_resetn0]
 
-  connect_bd_net -net clk_wiz_1_locked  [get_bd_pins proc_sys_reset_2_0/dcm_locked][get_bd_pins clk_wiz_1/locked]
+  connect_bd_net [get_bd_pins proc_sys_reset_2_0/dcm_locked] [get_bd_pins clk_wiz_1/locked]
   # Create address segments
   assign_bd_address -offset 0x80000000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs axi_intc_0/S_AXI/Reg] -force
 
