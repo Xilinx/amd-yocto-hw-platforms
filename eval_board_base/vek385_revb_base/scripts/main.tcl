@@ -6,7 +6,7 @@ xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
 set proj_name project_1
 set proj_dir ./hw_project
 set output_dir outputs
-set board vek385_2
+set board vek385_1
 
 # parse arguments
 for { set i 0 } { $i < $argc } { incr i } {
@@ -23,7 +23,7 @@ for { set i 0 } { $i < $argc } { incr i } {
  }
 	        
 create_project $proj_name $proj_dir/$proj_name -part xc2ve3858-ssva2112-2MP-e-S
-set_property board_part xilinx.com:vek385_2:part0:* [current_project]
+set_property board_part xilinx.com:${board}:part0:* [current_project]
 create_bd_design "versal_comn_platform" -mode batch
 instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Include_AIE.VALUE true}
 
