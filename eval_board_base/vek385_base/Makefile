@@ -14,7 +14,7 @@ SDT_PRJ_DIR = hw_project_sdt
 PDI_FILE = $(SDT_PRJ_DIR)/*boot.pdi
 VIV_SCRIPTS_DIR = scripts
 
-VIV_XSA = $(VIV_PRJ_DIR)/*.xsa
+VIV_XSA = $(VIV_PRJ_DIR)/$(PROJ_NAME)/outputs/*.xsa
 VIV_SRC = $(VIV_SCRIPTS_DIR)/main.tcl
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
@@ -39,21 +39,21 @@ xsa: $(VIV_XSA)
 $(VIV_XSA): $(VIV_SRC)
 	$(VIVADO) -mode batch -notrace -source $(VIV_SRC) -tclargs -jobs $(JOBS) -proj_name $(PROJ_NAME)
 
-sdt:
+sdt: $(PDI_FILE)
+$(PDI_FILE): $(SDTGEN_SRC)
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
 
-GOLDEN_UNIQUE_ID := $(shell basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vek385_*.ncr .ncr | cut -d "_" -f4 )
-PDI_UNIQUE_ID := $(shell $(BOOTGEN) -arch versal_2ve_2vm -read $(PDI_FILE) | grep 0x18700000 | grep unique | cut -d ":" -f3 | tr -d ' ')
-
-checkpdi:
-	$(info PDI_UNIQUE_ID:$(PDI_UNIQUE_ID))
-	$(info GOLDEN_UNIQUE_ID:$(GOLDEN_UNIQUE_ID))
-ifeq (${PDI_UNIQUE_ID},${GOLDEN_UNIQUE_ID})
-	$(info UNIQUE ID MATCHED)
-else
-	$(error UNIQUE ID DID NOT MATCH)
-endif
-
+checkpdi: xsa sdt
+	@echo "compatibility check"; \
+	GOLDEN_UNIQUE_ID=$$(basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vek385_*.ncr .ncr | cut -d "_" -f4 ); \
+	PDI_UNIQUE_ID=$$($(BOOTGEN) -arch versal_2ve_2vm -read $(PDI_FILE) | grep 0x18700000 | grep unique | cut -d ":" -f3 | tr -d ' '); \
+	echo "PDI_UNIQUE_ID: $$PDI_UNIQUE_ID"; \
+	echo "GOLDEN_UNIQUE_ID: $$GOLDEN_UNIQUE_ID"; \
+	if [ "$$PDI_UNIQUE_ID" = "$$GOLDEN_UNIQUE_ID" ]; then \
+		echo "UNIQUE ID MATCHED"; \
+	else \
+		echo "ERROR: UNIQUE ID DID NOT MATCH"; \
+	fi
 
 .PHONY: clean
 clean:
