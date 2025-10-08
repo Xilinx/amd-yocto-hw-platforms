@@ -715,19 +715,30 @@ CONFIG.PSU__USE__S_AXI_GP6  {0} \
 
  # Create instance: clk_wiz_0, and set properties
   set clk_wiz_1 [ create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wiz clk_wiz_1 ]
-  set_property -dict [list \
-  CONFIG.CLKOUT1_JITTER {175.029} \
-  CONFIG.CLKOUT1_REQUESTED_OUT_FREQ {200.000} \
-  CONFIG.CLKOUT2_USED {false} \
-  CONFIG.CLKOUT3_USED {false} \
-  CONFIG.MMCM_CLKOUT0_DIVIDE_F {6.000} \
-  CONFIG.MMCM_CLKOUT1_DIVIDE {1} \
-  CONFIG.MMCM_CLKOUT2_DIVIDE {1} \
-  CONFIG.NUM_OUT_CLKS {1} \
+  set_property -dict [ list \
+   CONFIG.CLKOUT2_JITTER {102.086} \
+   CONFIG.CLKOUT2_PHASE_ERROR {87.180} \
+   CONFIG.CLKOUT2_REQUESTED_OUT_FREQ {200.000} \
+   CONFIG.CLKOUT2_USED {true} \
+   CONFIG.CLKOUT3_JITTER {90.074} \
+   CONFIG.CLKOUT3_PHASE_ERROR {87.180} \
+   CONFIG.CLKOUT3_REQUESTED_OUT_FREQ {400.00} \
+   CONFIG.CLKOUT3_USED {true} \
+   CONFIG.MMCM_CLKOUT1_DIVIDE {6} \
+   CONFIG.MMCM_CLKOUT2_DIVIDE {3} \
+   CONFIG.NUM_OUT_CLKS {3} \
+   CONFIG.RESET_BOARD_INTERFACE {Custom} \
+   CONFIG.RESET_PORT {resetn} \
+   CONFIG.RESET_TYPE {ACTIVE_LOW} \
+   CONFIG.USE_BOARD_FLOW {true} \
  ] $clk_wiz_1
 
  # Create instance: proc_sys_reset_1, and set properties
-
+  set proc_sys_reset_1_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset proc_sys_reset_1_0 ]
+  set_property -dict [ list \
+   CONFIG.RESET_BOARD_INTERFACE {Custom} \
+   CONFIG.USE_BOARD_FLOW {true} \
+ ] $proc_sys_reset_1_0
 
   # Create instance: proc_sys_reset_2, and set properties
   set proc_sys_reset_2_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset proc_sys_reset_2_0 ]
@@ -737,7 +748,11 @@ CONFIG.PSU__USE__S_AXI_GP6  {0} \
  ] $proc_sys_reset_2_0
 
   # Create instance: proc_sys_reset_3, and set properties
-
+  set proc_sys_reset_3_0 [ create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset proc_sys_reset_3_0 ]
+  set_property -dict [ list \
+   CONFIG.RESET_BOARD_INTERFACE {Custom} \
+   CONFIG.USE_BOARD_FLOW {true} \
+ ] $proc_sys_reset_3_0
 
   # Create instance: ps8_0_axi_periph, and set properties
   set ps8_0_axi_periph [ create_bd_cell -type ip -vlnv xilinx.com:ip:axi_interconnect ps8_0_axi_periph ]
@@ -751,9 +766,9 @@ CONFIG.PSU__USE__S_AXI_GP6  {0} \
 
   # Create port connections
   connect_bd_net -net axi_intc_0_irq [get_bd_pins axi_intc_0/irq] [get_bd_pins zynq_ultra_ps_e_0/pl_ps_irq1]
-
-  connect_bd_net -net clk_wiz_1_clk_out1 [get_bd_pins clk_wiz_1/clk_out1] [get_bd_pins proc_sys_reset_2_0/slowest_sync_clk]
-
+  connect_bd_net -net clk_wiz_1_clk_out1 [get_bd_pins clk_wiz_1/clk_out1] [get_bd_pins proc_sys_reset_1_0/slowest_sync_clk]
+  connect_bd_net -net clk_wiz_1_clk_out2 [get_bd_pins clk_wiz_1/clk_out2] [get_bd_pins proc_sys_reset_2_0/slowest_sync_clk]
+  connect_bd_net -net clk_wiz_1_clk_out3 [get_bd_pins clk_wiz_1/clk_out3] [get_bd_pins proc_sys_reset_3_0/slowest_sync_clk]
   connect_bd_net -net proc_sys_reset_2_0_peripheral_aresetn [get_bd_pins axi_intc_0/s_axi_aresetn] [get_bd_pins proc_sys_reset_2_0/peripheral_aresetn] [get_bd_pins ps8_0_axi_periph/ARESETN] [get_bd_pins ps8_0_axi_periph/M00_ARESETN] [get_bd_pins ps8_0_axi_periph/S00_ARESETN]
   save_bd_design
   connect_bd_net [get_bd_pins axi_intc_0/s_axi_aclk] [get_bd_pins ps8_0_axi_periph/ACLK] [get_bd_pins ps8_0_axi_periph/M00_ACLK] [get_bd_pins ps8_0_axi_periph/S00_ACLK] [get_bd_pins zynq_ultra_ps_e_0/maxihpm0_lpd_aclk]
@@ -761,9 +776,10 @@ CONFIG.PSU__USE__S_AXI_GP6  {0} \
   apply_bd_automation -rule xilinx.com:bd_rule:clkrst -config { Clk {/zynq_ultra_ps_e_0/pl_clk0 (100 MHz)} Freq {100} Ref_Clk0 {} Ref_Clk1 {} Ref_Clk2 {}}  [get_bd_pins axi_intc_0/s_axi_aclk]
 
   connect_bd_net -net zynq_ultra_ps_e_0_pl_clk1 [get_bd_pins clk_wiz_1/clk_in1] [get_bd_pins zynq_ultra_ps_e_0/pl_clk1]
-  connect_bd_net [get_bd_pins clk_wiz_1/resetn] [get_bd_pins proc_sys_reset_2_0/ext_reset_in] [get_bd_pins zynq_ultra_ps_e_0/pl_resetn0]
+  connect_bd_net [get_bd_pins clk_wiz_1/resetn] [get_bd_pins proc_sys_reset_1_0/ext_reset_in] [get_bd_pins proc_sys_reset_2_0/ext_reset_in] [get_bd_pins proc_sys_reset_3_0/ext_reset_in] [get_bd_pins zynq_ultra_ps_e_0/pl_resetn0]
 
-  connect_bd_net [get_bd_pins proc_sys_reset_2_0/dcm_locked] [get_bd_pins clk_wiz_1/locked]
+  connect_bd_net -net clk_wiz_1_locked [get_bd_pins clk_wiz_1/locked] [get_bd_pins proc_sys_reset_1_0/dcm_locked] [get_bd_pins proc_sys_reset_2_0/dcm_locked] [get_bd_pins proc_sys_reset_3_0/dcm_locked]
+
   # Create address segments
   assign_bd_address -offset 0x80000000 -range 0x00010000 -target_address_space [get_bd_addr_spaces zynq_ultra_ps_e_0/Data] [get_bd_addr_segs axi_intc_0/S_AXI/Reg] -force
 
