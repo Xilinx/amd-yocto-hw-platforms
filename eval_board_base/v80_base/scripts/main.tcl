@@ -132,6 +132,26 @@ set_property CONFIG.PS_PMC_CONFIG { \
   SMON_TEMP_AVERAGING_SAMPLES {0} \
 } [get_bd_cells versal_cips_0]
 
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_noc:1.1 axi_noc_1
+apply_bd_automation -rule xilinx.com:bd_rule:axi_noc -config { hbm_density {None} hbm_internal_clk {0} hbm_nmu {None} mc_type {DDR} noc_clk {None} num_axi_bram {None} num_axi_tg {None} num_aximm_ext {None} num_mc_ddr {1} num_mc_lpddr {None} pl2noc_apm {0} pl2noc_cips {1}}  [get_bd_cells axi_noc_1]
+regenerate_bd_layout
+#memory extension for 36GB
+set_property -dict [list \
+  CONFIG.HBM_NUM_CHNL {16} \
+  CONFIG.NUM_HBM_BLI {0} \
+] [get_bd_cells axi_noc_0]
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} MC_3 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S00_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} MC_2 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S01_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} MC_0 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S02_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M03_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {false}} MC_1 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S03_AXI]
+set_property -dict [list CONFIG.CATEGORY {ps_rpu}] [get_bd_intf_pins /axi_noc_0/S04_AXI]
+
+# enabling axi_noc1 initial boot configs
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}} MC_3 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S00_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}} MC_2 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S01_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}} MC_0 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S02_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M03_INI {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}} MC_1 {read_bw {100} write_bw {100} read_avg_burst {4} write_avg_burst {4} initial_boot {true}}}] [get_bd_intf_pins /axi_noc_0/S03_AXI]
+set_property -dict [list CONFIG.CATEGORY {ps_rpu}] [get_bd_intf_pins /axi_noc_0/S04_AXI]
 validate_bd_design
 save_bd_design
 
