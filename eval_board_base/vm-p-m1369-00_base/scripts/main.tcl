@@ -6,7 +6,7 @@ xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
 set proj_name project_1
 set proj_dir ./hw_project
 set output_dir outputs
-set board l20
+set board vm-p-m1369-00
 
 # parse arguments
 for { set i 0 } { $i < $argc } { incr i } {
