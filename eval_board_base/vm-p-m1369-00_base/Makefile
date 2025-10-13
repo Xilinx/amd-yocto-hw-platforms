@@ -6,7 +6,7 @@ VIVADO = $(XILINX_VIVADO)/bin/vivado
 SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 
 JOBS ?= 1
-PROJ_NAME ?= l20_base
+PROJ_NAME ?= vm-p-m1369-00_base
 
 VIV_PRJ_DIR = hw_project
 SDT_PRJ_DIR = hw_project_sdt
@@ -21,7 +21,7 @@ help:
 	@echo 'Usage:'
 	@echo ''
 	@echo '  make xsa'
-	@echo '    Generate l20 base xsa.'
+	@echo '    Generate vm-p-m1369-00 base xsa.'
 	@echo '  make sdt'
 	@echo '    Generate the SDT files from XSA'
 	@echo '  make all'
