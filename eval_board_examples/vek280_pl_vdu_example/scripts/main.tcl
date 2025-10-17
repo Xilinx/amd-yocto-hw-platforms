@@ -79,12 +79,6 @@ set_property lock true [get_noc_net_routes -of [get_noc_logical_paths -of [get_n
 
 write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
 
-#set_property pfm_name {xilinx.com:vek280:vek280_base:1.0} [get_files -all {$proj_dir/$proj_name/${proj_name}.srcs/sources_1/bd/versal_comn_platform/versal_comn_platform.bd}]
-#set_property platform.platform_state {impl} [current_project]
-#set_property platform.uses_pr {true} [current_project]
-#write_hw_platform -hw -force -file xample/hw_project/project_1/versal_comn_platform_wrapper.xsa
-#INFO: [Pro
-
 set_property platform.board_id $proj_name [current_project]
             
 set_property platform.design_intent.datacenter false [current_project]
