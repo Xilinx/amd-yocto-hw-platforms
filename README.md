@@ -19,6 +19,19 @@ This repository supports the following platforms and their respective examples:
 1. Eval Boards Base
     1. zcu104_base
     2. vek280_base
+    3. vck190_base
+    4. vek385_base
+    5. vek385_revb_base
+    6. vmk180_base
+    7. vm-p-m1369-00_base
+    8. vpk120_base
+    9. vrk160_base
+    10. zc702_base
+    11. zcu102_base
+    12. v80_base
+    13. zcu106_base
+    14. zcu111_base
+    15. zcu208_base
 2. Kria Base
     1. k26
         1. k26_base
@@ -30,10 +43,12 @@ This repository supports the following platforms and their respective examples:
         2. k24i_prod
         3. kd240_base
 3. Eval Board Examples
-    1. zcu104_pl_vcu_extensible	(Extensible Platform with VCU in PL)
-    2. vek280_bram_gpio		(Segmented Platform with AXI_GPIO and BRAM in PL )
-    3. vek280_oob_platform		(Segmented Extensible Platform with AIE and VDU in PL)
-    4. vek280_aie_vdu_example		(Example to build AIE design and App with vek280_oob_platform using Vitis Tools)
+    1. zcu104_pl_vcu_extensible		(Extensible Platform with VCU in PL)
+    2. vck190_extensible_platform	(Segmented Extensible Platform with AIE in PL)
+    3. vek280_extensible_platform	(Segmented Extensible Platform with AIE in PL)
+    4. vek280_pl_vdu_example		(Segemented PL VDU example)
+    5. vek385_bram_gpio_timer		(Segmented Platform with AXI_GPIO and BRAM in PL)
+    6. aie_gmio_example			(Example to build AIE design and App with vck190/vek280 extensible platform using Vitis Tools)
 
 ## Required Tools
 
@@ -45,7 +60,7 @@ source <vivado-install-path>/settings64.sh
 
 ## Build Instructions
 
-cd to specific target directory and run make all
+cd to specific target directory and run make all JOBS=<No of jobs>
 
 Example:
 
