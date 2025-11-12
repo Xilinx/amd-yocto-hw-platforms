@@ -15,6 +15,7 @@ BASE_PLATFORM = $(PFMS_DIR)/base
 #APP VARIABLES
 XGEMM_DIR = $(PWD)/gmio-example/designs/xgemm-gmio
 AIEARCH ?= aieml
+BOARD ?= vek280
 
 VIV_SCRIPTS_DIR = scripts
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl

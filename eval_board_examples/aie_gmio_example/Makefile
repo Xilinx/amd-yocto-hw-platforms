@@ -33,7 +33,7 @@ endif
 all: xsa sdt
 
 xsa:
-	$(MAKE) -C $(XGEMM_DIR) AIEARCH=$(AIEARCH)
+	$(MAKE) -C $(XGEMM_DIR) AIEARCH=$(AIEARCH) BOARD=$(BOARD)
 
 sdt:
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_path $(XSA_PATH)
