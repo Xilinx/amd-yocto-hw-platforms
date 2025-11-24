@@ -44,7 +44,7 @@ $(PDI_FILE): $(SDTGEN_SRC)
 
 checkpdi: xsa sdt
 	@echo "compatibility check"; \
-	GOLDEN_UNIQUE_ID=$$(basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vek280_*.ncr .ncr | cut -d "_" -f4 ); \
+	GOLDEN_UNIQUE_ID=$$(basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vek280_*.ncr .ncr | grep -o '0x[0-9a-fA-F]\+' ); \
 	PDI_UNIQUE_ID=$$($(BOOTGEN) -arch versal -read $(PDI_FILE) | grep 0x18700000 | grep unique | cut -d ":" -f3 | tr -d ' '); \
 	echo "PDI_UNIQUE_ID: $$PDI_UNIQUE_ID"; \
 	echo "GOLDEN_UNIQUE_ID: $$GOLDEN_UNIQUE_ID"; \
