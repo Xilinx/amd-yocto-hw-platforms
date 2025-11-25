@@ -30,7 +30,7 @@ $(error Please source the vitis tools to continue)
 endif
 
 .PHONY: all
-all: xsa sdt
+all: xsa
 
 xsa:
 	$(MAKE) -C $(XGEMM_DIR) AIEARCH=$(AIEARCH) BOARD=$(BOARD)
