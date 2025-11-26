@@ -1,0 +1,84 @@
+# Copyright (C) 2025, Advanced Micro Devices, Inc.
+# SPDX-License-Identifier: Apache-2.0
+
+###################
+# LPDDR Constraints #
+###################
+
+set_property PACKAGE_PIN G2       [get_ports "C0_CH1_LPDDR5_0_dq[1]"] ;# Bank 700 VCCO -          - IO_L0P_H0O0P0_700
+set_property PACKAGE_PIN G1       [get_ports "C0_CH1_LPDDR5_0_dq[0]"] ;# Bank 700 VCCO -          - IO_L0N_H0O0P1_700
+set_property PACKAGE_PIN M4       [get_ports "C0_CH1_LPDDR5_0_wck_t[0]"] ;# Bank 700 VCCO -          - IO_L5P_XCC_H0O1P2_700
+set_property PACKAGE_PIN M3       [get_ports "C0_CH1_LPDDR5_0_wck_c[0]"] ;# Bank 700 VCCO -          - IO_L5N_XCC_H0O1P3_700
+set_property PACKAGE_PIN L4       [get_ports "C0_CH1_LPDDR5_0_dq[7]"] ;# Bank 700 VCCO -          - IO_L6P_H0O1P4_700
+set_property PACKAGE_PIN K3       [get_ports "C0_CH1_LPDDR5_0_dq[3]"] ;# Bank 700 VCCO -          - IO_L6N_H0O1P5_700
+set_property PACKAGE_PIN J4       [get_ports "C0_CH1_LPDDR5_0_dmi[0]"] ;# Bank 700 VCCO -          - IO_L7P_H0O1P6_700
+set_property PACKAGE_PIN H4       [get_ports "C0_CH1_LPDDR5_0_dq[9]"] ;# Bank 700 VCCO -          - IO_L8P_H0O2P0_700
+set_property PACKAGE_PIN G3       [get_ports "C0_CH1_LPDDR5_0_dq[12]"] ;# Bank 700 VCCO -          - IO_L8N_H0O2P1_700
+set_property PACKAGE_PIN G6       [get_ports "C0_CH1_LPDDR5_0_rdqs_t[1]"] ;# Bank 700 VCCO -          - IO_L9P_XCC_H0O2P2_700
+set_property PACKAGE_PIN G5       [get_ports "C0_CH1_LPDDR5_0_rdqs_c[1]"] ;# Bank 700 VCCO -          - IO_L9N_XCC_H0O2P3_700
+set_property PACKAGE_PIN H2       [get_ports "C0_CH1_LPDDR5_0_rdqs_t[0]"] ;# Bank 700 VCCO -          - IO_L1P_XCC_H0O0P2_700
+set_property PACKAGE_PIN J6       [get_ports "C0_CH1_LPDDR5_0_dq[11]"] ;# Bank 700 VCCO -          - IO_L10P_H0O2P4_700
+set_property PACKAGE_PIN H5       [get_ports "C0_CH1_LPDDR5_0_dq[8]"] ;# Bank 700 VCCO -          - IO_L10N_H0O2P5_700
+set_property PACKAGE_PIN M6       [get_ports "C0_CH1_LPDDR5_0_dq[15]"] ;# Bank 700 VCCO -          - IO_L12P_H0O3P0_700
+set_property PACKAGE_PIN L5       [get_ports "C0_CH1_LPDDR5_0_dq[10]"] ;# Bank 700 VCCO -          - IO_L12N_H0O3P1_700
+set_property PACKAGE_PIN G8       [get_ports "C0_CH1_LPDDR5_0_wck_t[1]"] ;# Bank 700 VCCO -          - IO_L13P_XCC_H0O3P2_700
+set_property PACKAGE_PIN H7       [get_ports "C0_CH1_LPDDR5_0_wck_c[1]"] ;# Bank 700 VCCO -          - IO_L13N_XCC_H0O3P3_700
+set_property PACKAGE_PIN H8       [get_ports "C0_CH1_LPDDR5_0_dq[13]"] ;# Bank 700 VCCO -          - IO_L14P_H0O3P4_700
+set_property PACKAGE_PIN J7       [get_ports "C0_CH1_LPDDR5_0_dq[14]"] ;# Bank 700 VCCO -          - IO_L14N_H0O3P5_700
+set_property PACKAGE_PIN H1       [get_ports "C0_CH1_LPDDR5_0_rdqs_c[0]"] ;# Bank 700 VCCO -          - IO_L1N_XCC_H0O0P3_700
+set_property PACKAGE_PIN K8       [get_ports "C0_CH1_LPDDR5_0_dmi[1]"] ;# Bank 700 VCCO -          - IO_L15P_H0O3P6_700
+set_property PACKAGE_PIN M7       [get_ports "C0_CH1_LPDDR5_0_ca[2]"] ;# Bank 700 VCCO -          - IO_L16N_H1O0P1_700
+set_property PACKAGE_PIN N8       [get_ports "C0_CH1_LPDDR5_0_ca[1]"] ;# Bank 700 VCCO -          - IO_L17P_XCC_H1O0P2_700
+set_property PACKAGE_PIN P8       [get_ports "C0_CH1_LPDDR5_0_ca[0]"] ;# Bank 700 VCCO -          - IO_L18P_H1O0P4_700
+set_property PACKAGE_PIN J1       [get_ports "C0_CH1_LPDDR5_0_dq[4]"] ;# Bank 700 VCCO -          - IO_L2P_H0O0P4_700
+set_property PACKAGE_PIN U7       [get_ports "C0_CH0_LPDDR5_0_reset_n"] ;# Bank 700 VCCO -          - IO_L20P_H1O1P0_700
+set_property PACKAGE_PIN V7       [get_ports "C0_CH1_LPDDR5_0_ca[6]"] ;# Bank 700 VCCO -          - IO_L20N_H1O1P1_700
+set_property PACKAGE_PIN T6       [get_ports "C0_CH1_LPDDR5_0_ca[5]"] ;# Bank 700 VCCO -          - IO_L21P_XCC_H1O1P2_700
+set_property PACKAGE_PIN R6       [get_ports "C0_CH1_LPDDR5_0_ca[4]"] ;# Bank 700 VCCO -          - IO_L22P_H1O1P4_700
+set_property PACKAGE_PIN P5       [get_ports "C0_CH1_LPDDR5_0_ca[3]"] ;# Bank 700 VCCO -          - IO_L22N_H1O1P5_700
+set_property PACKAGE_PIN P4       [get_ports "C0_CH0_LPDDR5_0_ca[1]"] ;# Bank 700 VCCO -          - IO_L24P_H1O2P0_700
+set_property PACKAGE_PIN N3       [get_ports "C0_CH0_LPDDR5_0_ca[0]"] ;# Bank 700 VCCO -          - IO_L24N_H1O2P1_700
+set_property PACKAGE_PIN K1       [get_ports "C0_CH1_LPDDR5_0_dq[5]"] ;# Bank 700 VCCO -          - IO_L2N_H0O0P5_700
+set_property PACKAGE_PIN R4       [get_ports "C0_CH1_LPDDR5_0_ck_t"] ;# Bank 700 VCCO -          - IO_L25P_XCC_H1O2P2_700
+set_property PACKAGE_PIN R3       [get_ports "C0_CH1_LPDDR5_0_ck_c"] ;# Bank 700 VCCO -          - IO_L25N_XCC_H1O2P3_700
+set_property PACKAGE_PIN U5       [get_ports "C0_CH0_LPDDR5_0_cs[0]"] ;# Bank 700 VCCO -          - IO_L26P_H1O2P4_700
+set_property PACKAGE_PIN U4       [get_ports "C0_CH1_LPDDR5_0_cs[0]"] ;# Bank 700 VCCO -          - IO_L26N_H1O2P5_700
+set_property PACKAGE_PIN T3       [get_ports "C0_CH0_LPDDR5_0_cs[1]"] ;# Bank 700 VCCO -          - IO_L27P_H1O2P6_700
+set_property PACKAGE_PIN U2       [get_ports "C0_CH1_LPDDR5_0_cs[1]"] ;# Bank 700 VCCO -          - IO_L27N_H1O2P7_700
+set_property PACKAGE_PIN T2       [get_ports "C0_CH0_LPDDR5_0_ca[6]"] ;# Bank 700 VCCO -          - IO_L28P_H1O3P0_700
+set_property PACKAGE_PIN U1       [get_ports "C0_CH0_LPDDR5_0_ca[5]"] ;# Bank 700 VCCO -          - IO_L28N_H1O3P1_700
+set_property PACKAGE_PIN R1       [get_ports "C0_CH0_LPDDR5_0_ca[4]"] ;# Bank 700 VCCO -          - IO_L29P_XCC_H1O3P2_700
+set_property PACKAGE_PIN P2       [get_ports "C0_CH0_LPDDR5_0_ca[3]"] ;# Bank 700 VCCO -          - IO_L30P_H1O3P4_700
+set_property PACKAGE_PIN P1       [get_ports "C0_CH0_LPDDR5_0_ca[2]"] ;# Bank 700 VCCO -          - IO_L30N_H1O3P5_700
+set_property PACKAGE_PIN N2       [get_ports "C0_CH0_LPDDR5_0_ck_t"] ;# Bank 700 VCCO -          - IO_L31P_H1O3P6_700
+set_property PACKAGE_PIN N1       [get_ports "C0_CH0_LPDDR5_0_ck_c"] ;# Bank 70G0 VCCO -          - IO_L31N_H1O3P7_700
+set_property PACKAGE_PIN K2       [get_ports "C0_CH1_LPDDR5_0_dq[2]"] ;# Bank 700 VCCO -          - IO_L4P_H0O1P0_700
+set_property PACKAGE_PIN L2       [get_ports "C0_CH1_LPDDR5_0_dq[6]"] ;# Bank 700 VCCO -          - IO_L4N_H0O1P1_700
+set_property PACKAGE_PIN V1       [get_ports "C0_CH0_LPDDR5_0_dq[14]"] ;# Bank 701 VCCO -          - IO_L0P_H0O0P0_701
+set_property PACKAGE_PIN W1       [get_ports "C0_CH0_LPDDR5_0_dq[13]"] ;# Bank 701 VCCO -          - IO_L0N_H0O0P1_701
+set_property PACKAGE_PIN Y4       [get_ports "C0_CH0_LPDDR5_0_wck_t[1]"] ;# Bank 701 VCCO -          - IO_L5P_XCC_H0O1P2_701
+set_property PACKAGE_PIN AA3      [get_ports "C0_CH0_LPDDR5_0_wck_c[1]"] ;# Bank 701 VCCO -          - IO_L5N_XCC_H0O1P3_701
+set_property PACKAGE_PIN W2       [get_ports "C0_CH0_LPDDR5_0_dq[12]"] ;# Bank 701 VCCO -          - IO_L6P_H0O1P4_701
+set_property PACKAGE_PIN V3       [get_ports "C0_CH0_LPDDR5_0_dq[15]"] ;# Bank 701 VCCO -          - IO_L6N_H0O1P5_701
+set_property PACKAGE_PIN V4       [get_ports "C0_CH0_LPDDR5_0_dmi[1]"] ;# Bank 701 VCCO -          - IO_L7P_H0O1P6_701
+set_property PACKAGE_PIN AB5      [get_ports "C0_CH0_LPDDR5_0_dq[4]"] ;# Bank 701 VCCO -          - IO_L8P_H0O2P0_701
+set_property PACKAGE_PIN AA4      [get_ports "C0_CH0_LPDDR5_0_dq[1]"] ;# Bank 701 VCCO -          - IO_L8N_H0O2P1_701
+set_property PACKAGE_PIN AC5      [get_ports "C0_CH0_LPDDR5_0_rdqs_t[0]"] ;# Bank 701 VCCO -          - IO_L9P_XCC_H0O2P2_701
+set_property PACKAGE_PIN AC4      [get_ports "C0_CH0_LPDDR5_0_rdqs_c[0]"] ;# Bank 701 VCCO -          - IO_L9N_XCC_H0O2P3_701
+set_property PACKAGE_PIN Y2       [get_ports "C0_CH0_LPDDR5_0_rdqs_t[1]"] ;# Bank 701 VCCO -          - IO_L1P_XCC_H0O0P2_701
+set_property PACKAGE_PIN AA6      [get_ports "C0_CH0_LPDDR5_0_dq[2]"] ;# Bank 701 VCCO -          - IO_L10P_H0O2P4_701
+set_property PACKAGE_PIN Y5       [get_ports "C0_CH0_LPDDR5_0_dq[0]"] ;# Bank 701 VCCO -          - IO_L10N_H0O2P5_701
+set_property PACKAGE_PIN V6       [get_ports "C0_CH0_LPDDR5_0_dmi[0]"] ;# Bank 701 VCCO -          - IO_L11P_H0O2P6_701
+set_property PACKAGE_PIN Y7       [get_ports "C0_CH0_LPDDR5_0_dq[3]"] ;# Bank 701 VCCO -          - IO_L12P_H0O3P0_701
+set_property PACKAGE_PIN W6       [get_ports "C0_CH0_LPDDR5_0_dq[5]"] ;# Bank 701 VCCO -          - IO_L12N_H0O3P1_701
+set_property PACKAGE_PIN AA7      [get_ports "C0_CH0_LPDDR5_0_wck_t[0]"] ;# Bank 701 VCCO -          - IO_L13P_XCC_H0O3P2_701
+set_property PACKAGE_PIN AB6      [get_ports "C0_CH0_LPDDR5_0_wck_c[0]"] ;# Bank 701 VCCO -          - IO_L13N_XCC_H0O3P3_701
+set_property PACKAGE_PIN W8       [get_ports "C0_CH0_LPDDR5_0_dq[6]"] ;# Bank 701 VCCO -          - IO_L14P_H0O3P4_701
+set_property PACKAGE_PIN Y8       [get_ports "C0_CH0_LPDDR5_0_dq[7]"] ;# Bank 701 VCCO -          - IO_L14N_H0O3P5_701
+set_property PACKAGE_PIN Y1       [get_ports "C0_CH0_LPDDR5_0_rdqs_c[1]"] ;# Bank 701 VCCO -          - IO_L1N_XCC_H0O0P3_701
+set_property PACKAGE_PIN AA1      [get_ports "C0_CH0_LPDDR5_0_dq[11]"] ;# Bank 701 VCCO -          - IO_L2P_H0O0P4_701
+set_property PACKAGE_PIN AB1      [get_ports "C0_CH0_LPDDR5_0_dq[10]"] ;# Bank 701 VCCO -          - IO_L2N_H0O0P5_701
+set_property PACKAGE_PIN AC2      [get_ports "sys_clk0_0_clk_p[0]"] ;# Bank 701 VCCO -          - IO_L3P_GC_H0O0P6_701
+set_property PACKAGE_PIN AC1      [get_ports "sys_clk0_0_clk_n[0]"] ;# Bank 701 VCCO -          - IO_L3N_GC_H0O0P7_701
+set_property PACKAGE_PIN AB3      [get_ports "C0_CH0_LPDDR5_0_dq[9]"] ;# Bank 701 VCCO -          - IO_L4P_H0O1P0_701
+set_property PACKAGE_PIN AB2      [get_ports "C0_CH0_LPDDR5_0_dq[8]"] ;# Bank 701 VCCO -          - IO_L4N_H0O1P1_701
