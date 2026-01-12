@@ -6,7 +6,7 @@ VIVADO = $(XILINX_VIVADO)/bin/vivado
 SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 
 JOBS ?= 32
-PROJ_NAME ?= zcu104_pl_vcu_extensible
+PROJ_NAME ?= zcu104_pl_vcu_example
 
 VIV_PRJ_DIR = hw_project
 SDT_PRJ_DIR = hw_project_sdt
