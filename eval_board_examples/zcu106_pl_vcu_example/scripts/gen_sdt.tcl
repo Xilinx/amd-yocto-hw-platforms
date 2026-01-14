@@ -15,5 +15,5 @@ set xsa_path ./hw_project/$xsa_name/outputs/$xsa_name.xsa
  set_dt_param -debug enable
  set_dt_param -dir ./hw_project_sdt
  set_dt_param -xsa $xsa_path
- set_dt_param -board_dts zcu104-reva
+ set_dt_param -board_dts zcu106-reva
  generate_sdt
