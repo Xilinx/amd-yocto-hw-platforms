@@ -41,7 +41,7 @@ update_compile_order -fileset sources_1
 
 #source pl vdu tcl
 source ./scripts/vcu.tcl
-
+assign_bd_address
 save_bd_design
 validate_bd_design
 file mkdir $proj_dir/$proj_name/$output_dir
