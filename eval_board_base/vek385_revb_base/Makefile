@@ -1,8 +1,6 @@
 # Copyright (C) 2024, Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-include platform.mk
-
 RM = rm -rf
 VIVADO = $(XILINX_VIVADO)/bin/vivado
 SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
@@ -20,12 +18,6 @@ VIV_XSA = $(VIV_PRJ_DIR)/*.xsa
 VIV_SRC = $(VIV_SCRIPTS_DIR)/main.tcl
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
-# Clone the System Device-tree source
-get_sdt_source:
-	if [ ! -d "./system-device-tree-xlnx" ];then \
-		git clone https://gitenterprise.xilinx.com/decoupling/system-device-tree-xlnx.git; \
-	fi
-	cd system-device-tree-xlnx && git checkout master-next && git pull && git log -n1 --pretty=oneline;
 
 .PHONY: help
 help:
@@ -43,11 +35,11 @@ help:
 .PHONY: all
 all: xsa sdt checkpdi
 
-xsa: get_sdt_source $(VIV_XSA)
+xsa: $(VIV_XSA)
 $(VIV_XSA): $(VIV_SRC)
 	$(VIVADO) -mode batch -notrace -source $(VIV_SRC) -tclargs -jobs $(JOBS) -proj_name $(PROJ_NAME)
 
-sdt: get_sdt_source
+sdt:
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
 
 GOLDEN_UNIQUE_ID := $(shell basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vek385_*.ncr .ncr | cut -d "_" -f4 )
