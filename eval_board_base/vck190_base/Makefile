@@ -33,7 +33,7 @@ help:
 	@echo ''
 
 .PHONY: all
-all: xsa sdt checkpdi
+all: xsa sdt
 
 xsa: $(VIV_XSA)
 $(VIV_XSA): $(VIV_SRC)
