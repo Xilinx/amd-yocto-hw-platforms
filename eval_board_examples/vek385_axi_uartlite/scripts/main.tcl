@@ -24,24 +24,42 @@ for { set i 0 } { $i < $argc } { incr i } {
 
 create_project $proj_name $proj_dir/$proj_name -part xc2ve3858-ssva2112-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
-create_bd_design "versal_comn_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Include_AIE.VALUE true}
+create_bd_design "edf_base" -mode batch
+instantiate_example_design -template xilinx.com:design:edf_base:* -design edf_base
 
-#Add Axi_timer PL IP and connect it.
-create_bd_cell -type ip -vlnv xilinx.com:ip:axi_timer:* axi_timer_0
+#Add Axi_Uartlite PL IP and connect it.
 
-set_property CONFIG.NUM_MI {12} [get_bd_cells ctrl_smc]
+create_bd_cell -type ip -vlnv xilinx.com:ip:axi_uartlite:* axi_uartlite_0
+disconnect_bd_net /ilconstant_1_dout [get_bd_pins ps_wizard_0/fpd_axi_pl_aclk]
+startgroup
 
-connect_bd_intf_net [get_bd_intf_pins axi_timer_0/S_AXI] [get_bd_intf_pins ctrl_smc/M11_AXI]
-connect_bd_net [get_bd_pins axi_timer_0/s_axi_aclk] [get_bd_pins clk_wizard_0/clk_out1]
-connect_bd_net [get_bd_pins axi_timer_0/s_axi_aresetn] [get_bd_pins ps_wizard_0/pl0_resetn]
-connect_bd_net [get_bd_pins axi_timer_0/interrupt] [get_bd_pins ps_wizard_0/pl_fpd_irq0]
+create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:* smartconnect_0
+endgroup
+
+set_property CONFIG.NUM_SI {1} [get_bd_cells smartconnect_0]
+startgroup
+
+create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:* proc_sys_reset_0
+endgroup
+
+connect_bd_net [get_bd_pins ps_wizard_0/pl0_ref_clk] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
+connect_bd_net [get_bd_pins ps_wizard_0/pl0_resetn] [get_bd_pins proc_sys_reset_0/ext_reset_in]
+connect_bd_net [get_bd_pins smartconnect_0/aclk] [get_bd_pins ps_wizard_0/pl0_ref_clk]
+connect_bd_net [get_bd_pins smartconnect_0/aresetn] [get_bd_pins proc_sys_reset_0/interconnect_aresetn]
+connect_bd_intf_net [get_bd_intf_pins smartconnect_0/S00_AXI] [get_bd_intf_pins ps_wizard_0/FPD_AXI_PL]
+connect_bd_net [get_bd_pins ps_wizard_0/fpd_axi_pl_aclk] [get_bd_pins ps_wizard_0/pl0_ref_clk]
+connect_bd_intf_net [get_bd_intf_pins smartconnect_0/M00_AXI] [get_bd_intf_pins axi_uartlite_0/S_AXI]
+connect_bd_net [get_bd_pins axi_uartlite_0/s_axi_aclk] [get_bd_pins ps_wizard_0/pl0_ref_clk]
+connect_bd_net [get_bd_pins axi_uartlite_0/s_axi_aresetn] [get_bd_pins proc_sys_reset_0/interconnect_aresetn]
+connect_bd_net [get_bd_pins axi_uartlite_0/rx] [get_bd_pins axi_uartlite_0/tx]
+connect_bd_net [get_bd_pins axi_uartlite_0/interrupt] [get_bd_pins ps_wizard_0/pl_fpd_irq0]
 assign_bd_address
 
 update_compile_order -fileset sources_1
 
 save_bd_design
 validate_bd_design
+
 file mkdir $proj_dir/$proj_name/$output_dir
 
 set outputs_dir $proj_dir/$proj_name/$output_dir
