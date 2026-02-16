@@ -24,8 +24,8 @@ for { set i 0 } { $i < $argc } { incr i } {
 	        
 create_project $proj_name $proj_dir/$proj_name -part xc2ve3858-ssva2112-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
-create_bd_design "edf_base" -mode batch
-instantiate_example_design -template xilinx.com:design:edf_base:1.0 -design edf_base
+create_bd_design "versal_comn_platform" -mode batch
+instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Include_AIE.VALUE true}
 
 # Run custom tcl hooks post CED design
 if [file exist "./scripts/post_ced_config.tcl"] {
