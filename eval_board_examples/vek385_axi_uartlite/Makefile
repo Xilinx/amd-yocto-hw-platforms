@@ -9,7 +9,7 @@ BOOTGEN = $(XILINX_VIVADO)/bin/bootgen
 DTC = $(XILINX_VIVADO)/bin/dtc
 
 JOBS ?= 1
-PROJ_NAME ?= vek385_bram_gpio_timer
+PROJ_NAME ?= vek385_axi_uartlite
 FWDIR = $(PROJ_NAME)-fw
 
 VIV_PRJ_DIR = hw_project
