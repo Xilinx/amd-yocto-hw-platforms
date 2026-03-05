@@ -10,8 +10,8 @@ if { [file exists ../../../../cdo/secio-sysmon.v4.cdo] == 1 } {
 if { [file exists ../../secio-sysmon.v4.cdo] == 1 } {
     puts "######### Regenerating PDI with overlay CDO applied #########"
     puts "CWD '[pwd]'"
-    puts "Running '[exec which bootgen] -arch versal -image edf_base_wrapper_boot.bif -w -o ./edf_base_wrapper_boot.pdi -overlay_cdo ./hw_project/secio-sysmon.v4.cdo'"
-    exec mv ./edf_base_wrapper_boot.pdi ./edf_base_wrapper_boot.pdi.orig
-    exec [exec which bootgen] -arch versal -image edf_base_wrapper_boot.bif -w -o ./edf_base_wrapper_boot.pdi -overlay_cdo ../../secio-sysmon.v4.cdo
+    puts "Running '[exec which bootgen] -arch versal -image edf_base_pl_wrapper_boot.bif -w -o ./edf_base_pl_wrapper_boot.pdi -overlay_cdo ./hw_project/secio-sysmon.v4.cdo'"
+    exec mv ./edf_base_pl_wrapper_boot.pdi ./edf_base_pl_wrapper_boot.pdi.orig
+    exec [exec which bootgen] -arch versal -image edf_base_pl_wrapper_boot.bif -w -o ./edf_base_pl_wrapper_boot.pdi -overlay_cdo ../../secio-sysmon.v4.cdo
 }
 

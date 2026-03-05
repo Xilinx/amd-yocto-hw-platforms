@@ -24,8 +24,8 @@ for { set i 0 } { $i < $argc } { incr i } {
 	        
 create_project $proj_name $proj_dir/$proj_name -part xcvp1802-lsvc4072-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
-create_bd_design "edf_base" -mode batch
-instantiate_example_design -template xilinx.com:design:edf_base:1.0 -design edf_base
+create_bd_design "edf_base_pl" -mode batch
+instantiate_example_design -template xilinx.com:design:edf_base_pl:1.0 -design edf_base_pl
 set_property segmented_configuration true [current_project]
 
 update_compile_order -fileset sources_1
