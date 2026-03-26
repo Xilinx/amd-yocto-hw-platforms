@@ -1,23 +1,20 @@
-# Copyright (C) 2024, Advanced Micro Devices, Inc.
-# SPDX-License-Identifier: Apache-2.0
-#
-# Example of PL VDU based on CED design.
-#
-# Maram,Shiva Reddy <shiva.reddy.maram@amd.com>
-#
-
-## ps interrupt enable
-set_property CONFIG.PS_PMC_CONFIG { \
-  PS_IRQ_USAGE {{CH0 1} {CH1 1} {CH2 1} {CH3 1} {CH4 1}} \
-} [get_bd_cells CIPS_0]
-
-set_property CONFIG.NUM_MI {5} [get_bd_cells ctrl_smc]
-
-set_property CONFIG.NUM_CLKS {2} [get_bd_cells ctrl_smc]
-connect_bd_net [get_bd_pins ctrl_smc/aclk1] [get_bd_pins clk_wizard_0/clk_out2]
-
-
-##vdu
+create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 smartconnect_0
+set_property CONFIG.NUM_SI {1} [get_bd_cells smartconnect_0]
+set_property -dict [list \
+  CONFIG.NUM_CLKS {1} \
+  CONFIG.NUM_MI {2} \
+  CONFIG.NUM_SI {1} \
+] [get_bd_cells smartconnect_0]
+create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wizard:1.0 clk_wizard_0
+set_property -dict [list \
+  CONFIG.CLKOUT_REQUESTED_OUT_FREQUENCY {100.000,300.000,100.000,100.000,100.000,100.000,100.000} \
+  CONFIG.CLKOUT_USED {true,true,false,false,false,false,false} \
+  CONFIG.USE_RESET {true} \
+] [get_bd_cells clk_wizard_0]
+set_property CONFIG.RESET_TYPE {ACTIVE_LOW} [get_bd_cells clk_wizard_0]
+connect_bd_net [get_bd_pins CIPS_0/pl0_ref_clk] [get_bd_pins clk_wizard_0/clk_in1]
+connect_bd_net [get_bd_pins CIPS_0/pl0_resetn] [get_bd_pins clk_wizard_0/resetn]
+create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0
 proc create_hier_cell_vdu { parentCell nameHier } {
 
   variable script_folder
@@ -206,44 +203,26 @@ proc create_hier_cell_vdu { parentCell nameHier } {
   current_bd_instance $oldCurInst
 }
 create_hier_cell_vdu [current_bd_instance .] vdu
- 
-  set_property -dict [list \
-    CONFIG.CE_TYPE {HARDSYNC} \
-    CONFIG.CLKOUT_DRIVES {MBUFGCE,BUFG,BUFG,BUFG,BUFG,BUFG,BUFG} \
-    CONFIG.CLKOUT_DYN_PS {None,None,None,None,None,None,None} \
-    CONFIG.CLKOUT_GROUPING {Auto,Auto,Auto,Auto,Auto,Auto,Auto} \
-    CONFIG.CLKOUT_MATCHED_ROUTING {false,false,false,false,false,false,false} \
-    CONFIG.CLKOUT_PORT {clk_out1,clk_out2,clk_out3,clk_out4,clk_out5,clk_out6,clk_out7} \
-    CONFIG.CLKOUT_REQUESTED_DUTY_CYCLE {50.000,50.000,50.000,50.000,50.000,50.000,50.000} \
-    CONFIG.CLKOUT_REQUESTED_OUT_FREQUENCY {625,100,300.000,100.000,100.000,100.000,100.000} \
-    CONFIG.CLKOUT_REQUESTED_PHASE {0.000,0.000,0.000,0.000,0.000,0.000,0.000} \
-    CONFIG.CLKOUT_USED {true,true,true,false,false,false,false} \
-    CONFIG.JITTER_SEL {Min_O_Jitter} \
-    CONFIG.PRIM_SOURCE {No_buffer} \
-    CONFIG.RESET_TYPE {ACTIVE_LOW} \
-    CONFIG.USE_PHASE_ALIGNMENT {true} \
-  ] [get_bd_cells clk_wizard_0]
-
-
-
-connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/S_AXI_LITE] [get_bd_intf_pins ctrl_smc/M03_AXI]
-connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/S_AXI] [get_bd_intf_pins ctrl_smc/M04_AXI]
-
-
-connect_bd_net [get_bd_pins vdu/s_axi_aclk] [get_bd_pins clk_wizard_0/clk_out2]
-connect_bd_net [get_bd_pins vdu/mcu_dec_axi_aclk] [get_bd_pins clk_wizard_0/clk_out3]
-
-connect_bd_net [get_bd_pins vdu/s_axi_aresetn] [get_bd_pins proc_sys_reset_1/peripheral_aresetn]
+connect_bd_net [get_bd_pins clk_wizard_0/clk_out1] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
+connect_bd_net [get_bd_pins vdu/s_axi_aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
+connect_bd_net [get_bd_pins smartconnect_0/aclk] [get_bd_pins clk_wizard_0/clk_out2]
+connect_bd_net [get_bd_pins smartconnect_0/aresetn] [get_bd_pins proc_sys_reset_0/interconnect_aresetn]
+connect_bd_intf_net [get_bd_intf_pins smartconnect_0/M00_AXI] -boundary_type upper [get_bd_intf_pins vdu/S_AXI_LITE]
+connect_bd_intf_net [get_bd_intf_pins smartconnect_0/M01_AXI] -boundary_type upper [get_bd_intf_pins vdu/S_AXI]
+connect_bd_intf_net [get_bd_intf_pins CIPS_0/M_AXI_FPD] [get_bd_intf_pins smartconnect_0/S00_AXI]
+disconnect_bd_net /ilconstant_0_dout [get_bd_pins CIPS_0/m_axi_fpd_aclk]
+connect_bd_net [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins clk_wizard_0/clk_out1]
+delete_bd_objs [get_bd_nets clk_wizard_0_clk_out2]
+connect_bd_net [get_bd_pins proc_sys_reset_0/ext_reset_in] [get_bd_pins CIPS_0/pl0_resetn]
+connect_bd_net [get_bd_pins vdu/vdu_host_interrupt0] [get_bd_pins CIPS_0/pl_ps_irq0]
+connect_bd_net [get_bd_pins vdu/vdu_host_interrupt1] [get_bd_pins CIPS_0/pl_ps_irq1]
+connect_bd_net [get_bd_pins vdu/vdu_host_interrupt2] [get_bd_pins CIPS_0/pl_ps_irq2]
+connect_bd_net [get_bd_pins vdu/vdu_host_interrupt3] [get_bd_pins CIPS_0/pl_ps_irq3]
+connect_bd_net [get_bd_pins vdu/s_axi_aclk] [get_bd_pins clk_wizard_0/clk_out1]
+connect_bd_net [get_bd_pins vdu/mcu_dec_axi_aclk] [get_bd_pins clk_wizard_0/clk_out2]
+connect_bd_net [get_bd_pins smartconnect_0/aclk] [get_bd_pins clk_wizard_0/clk_out1]
 connect_bd_net [get_bd_pins vdu/ref_clk] [get_bd_pins CIPS_0/pl0_ref_clk]
-
-
-connect_bd_net [get_bd_pins vdu/vdu_host_interrupt0] [get_bd_pins CIPS_0/pl_ps_irq1]
-connect_bd_net [get_bd_pins vdu/vdu_host_interrupt1] [get_bd_pins CIPS_0/pl_ps_irq2]
-connect_bd_net [get_bd_pins vdu/vdu_host_interrupt2] [get_bd_pins CIPS_0/pl_ps_irq3]
-connect_bd_net [get_bd_pins vdu/vdu_host_interrupt3] [get_bd_pins CIPS_0/pl_ps_irq4]
-
 set_property CONFIG.NUM_SI {9} [get_bd_cells aggr_noc]
-
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI] [get_bd_intf_pins aggr_noc/S00_AXI]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI1] [get_bd_intf_pins aggr_noc/S01_AXI]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI2] [get_bd_intf_pins aggr_noc/S02_AXI]
@@ -252,21 +231,17 @@ connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI4] [get_bd_i
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI5] [get_bd_intf_pins aggr_noc/S05_AXI]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI6] [get_bd_intf_pins aggr_noc/S06_AXI]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI7] [get_bd_intf_pins aggr_noc/S07_AXI]
+connect_bd_net [get_bd_pins aggr_noc/aclk0] [get_bd_pins clk_wizard_0/clk_out2]
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S00_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S01_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S02_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S03_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M03_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S04_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M03_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S05_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S06_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S07_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S06_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S07_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500} } M03_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S08_AXI]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI8] [get_bd_intf_pins aggr_noc/S08_AXI]
-connect_bd_net [get_bd_pins aggr_noc/aclk0] [get_bd_pins clk_wizard_0/clk_out3]
-set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S00_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S01_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S02_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M02_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S03_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M03_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S04_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M03_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S05_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S06_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S07_AXI]
-set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500}} M03_INI {read_bw {500} write_bw {500}} M00_INI {read_bw {500} write_bw {500}}}] [get_bd_intf_pins /aggr_noc/S08_AXI]
-
-
-delete_bd_objs [get_bd_addr_segs CIPS_0/M_AXI_FPD/SEG_axi_intc_0_Reg]
-delete_bd_objs [get_bd_addr_segs CIPS_0/M_AXI_FPD/SEG_axi_gpio_vdu_Reg]
-assign_bd_address -target_address_space /CIPS_0/M_AXI_FPD [get_bd_addr_segs vdu/vdu_0/S_AXI_LITE/Reg] -force
-assign_bd_address
 
