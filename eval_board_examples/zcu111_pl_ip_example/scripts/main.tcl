@@ -104,25 +104,6 @@ launch_runs impl_1 -to_step write_bitstream
             
 wait_on_run impl_1
         
-
-set_property platform.board_id $proj_name [current_project]
-            
-set_property platform.design_intent.datacenter false [current_project]
-            
-set_property platform.design_intent.embedded true [current_project]
-            
-set_property platform.design_intent.external_host false [current_project]
-            
-set_property platform.design_intent.server_managed false [current_project]
-            
-set_property platform.extensible true [current_project]
-            
-set_property platform.name $proj_name [current_project]
-            
-set_property platform.vendor "xilinx" [current_project]
-            
-set_property platform.version "1.0" [current_project]
-            
 open_run impl_1        
 write_hw_platform -force -include_bit -file $outputs_dir/${proj_name}.xsa
 validate_hw_platform -verbose $outputs_dir/${proj_name}.xsa
