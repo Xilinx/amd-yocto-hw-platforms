@@ -1,7 +1,6 @@
 # Copyright (C) 2024, Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
 
 set proj_name project_1
 set proj_dir ./hw_project
@@ -24,13 +23,14 @@ for { set i 0 } { $i < $argc } { incr i } {
 	        
 create_project $proj_name $proj_dir/$proj_name -part xcve2802-vsvh1760-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
-create_bd_design "versal_comn_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Design_type.VALUE Extensible}
+set_property segmented_configuration true [current_project]
+create_bd_design "edf_base" -mode batch
+instantiate_example_design -template xilinx.com:design:edf_base:1.0 -design edf_base
 update_compile_order -fileset sources_1
 
 #source pl vdu tcl
 source ./scripts/vdu.tcl
-
+assign_bd_address
 save_bd_design
 validate_bd_design
 file mkdir $proj_dir/$proj_name/$output_dir
@@ -101,6 +101,5 @@ set_property platform.platform_state {impl} [current_project]
 
 set_property platform.uses_pr {true} [current_project]
 
-
-write_hw_platform -hw -force $outputs_dir/${proj_name}.xsa
+write_hw_platform -fixed $outputs_dir/${proj_name}.xsa
 validate_hw_platform -verbose $outputs_dir/${proj_name}.xsa
