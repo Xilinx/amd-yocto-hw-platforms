@@ -1,8 +1,0 @@
-/*
- * Workaround dts file for sp701
- */
-
-/{
-	model = "AMD MicroBlaze V 64bit SP701";
-	compatible = "qemu,mbv", "amd,mbv";
-};
