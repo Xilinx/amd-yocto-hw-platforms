@@ -1,0 +1,93 @@
+/ {
+	/* Add Board specific PL gpio-line-names for LEDs, push buttons, and DIP switches */
+	amba_pl {
+		gpio@a6010000 {
+			gpio-line-names = "pl_led0", "pl_led1", "pl_led2", "pl_led3";
+		};
+
+		gpio@a6020000 {
+			gpio-line-names = "pl_pb0", "pl_pb1";
+		};
+
+		gpio@a6030000 {
+			gpio-line-names = "pl_dip_sw0", "pl_dip_sw1",
+					  "pl_dip_sw2", "pl_dip_sw3";
+		};
+
+		leds {
+			compatible = "gpio-leds";
+
+			pl_led0: led-0 {
+				label = "pl_led0";
+				gpios = <&axi_gpio_0 0 0>;
+				default-state = "off";
+			};
+
+			pl_led1: led-1 {
+				label = "pl_led1";
+				gpios = <&axi_gpio_0 1 0>;
+				default-state = "off";
+			};
+
+			pl_led2: led-2 {
+				label = "pl_led2";
+				gpios = <&axi_gpio_0 2 0>;
+				default-state = "off";
+			};
+
+			pl_led3: led-3 {
+				label = "pl_led3";
+				gpios = <&axi_gpio_0 3 0>;
+				default-state = "off";
+			};
+		};
+
+		/*
+		 * AXI GPIO inputs in this design do not expose interrupts, so use
+		 * the polled variant for DIP switches and push buttons.
+		 */
+		pl_gpio_keys: gpio-keys {
+			compatible = "gpio-keys-polled";
+			label = "pl-gpio-keys";
+			poll-interval = <100>;
+
+			pl_dip_sw0 {
+				label = "pl_dip_sw0";
+				gpios = <&axi_gpio_2 0 0>;
+				linux,code = <0x100>;
+			};
+
+			pl_dip_sw1 {
+				label = "pl_dip_sw1";
+				gpios = <&axi_gpio_2 1 0>;
+				linux,code = <0x101>;
+			};
+
+			pl_dip_sw2 {
+				label = "pl_dip_sw2";
+				gpios = <&axi_gpio_2 2 0>;
+				linux,code = <0x102>;
+			};
+
+			pl_dip_sw3 {
+				label = "pl_dip_sw3";
+				gpios = <&axi_gpio_2 3 0>;
+				linux,code = <0x103>;
+			};
+
+			pl_pb0 {
+				label = "pl_pb0";
+				gpios = <&axi_gpio_1 0 0>;
+				linux,code = <0x104>;
+				debounce-interval = <10>;
+			};
+
+			pl_pb1 {
+				label = "pl_pb1";
+				gpios = <&axi_gpio_1 1 0>;
+				linux,code = <0x105>;
+				debounce-interval = <10>;
+			};
+		};
+	};
+};
