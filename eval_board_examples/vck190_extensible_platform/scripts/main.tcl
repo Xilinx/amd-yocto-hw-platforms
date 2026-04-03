@@ -24,8 +24,10 @@ for { set i 0 } { $i < $argc } { incr i } {
 	        
 create_project $proj_name $proj_dir/$proj_name -part xcvc1902-vsva2197-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
-create_bd_design "versal_comn_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:versal_comn_platform:2.0 -design versal_comn_platform -options { Design_type.VALUE Extensible Include_AIE.VALUE true}
+set_property segmented_configuration true [current_project]
+create_bd_design "edf_base" -mode batch
+instantiate_example_design -template xilinx.com:design:edf_base:1.0 -design edf_base
+source scripts/update_bd.tcl
 update_compile_order -fileset sources_1
         
 save_bd_design
