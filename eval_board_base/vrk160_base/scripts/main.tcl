@@ -3,6 +3,12 @@
 
 enable_beta_device *
 xhub::refresh_catalog [xhub::get_xstores Vivado_example_project]
+xhub::refresh_catalog [xhub::get_xstores xilinx_board_store]
+xhub::install [xhub::get_xitems *vrk160:1.2*]
+xhub::update [xhub::get_xitems *vrk160:1.2*]
+
+set_param board.repoPaths \
+  [get_property LOCAL_ROOT_DIR [xhub::get_xstores xilinx_board_store]]
 
 set proj_name project_1
 set proj_dir ./hw_project
