@@ -1,20 +1,11 @@
-create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 smartconnect_0
-set_property CONFIG.NUM_SI {1} [get_bd_cells smartconnect_0]
-set_property -dict [list \
-  CONFIG.NUM_CLKS {1} \
-  CONFIG.NUM_MI {2} \
-  CONFIG.NUM_SI {1} \
-] [get_bd_cells smartconnect_0]
-create_bd_cell -type ip -vlnv xilinx.com:ip:clk_wizard:1.0 clk_wizard_0
+
 set_property -dict [list \
   CONFIG.CLKOUT_REQUESTED_OUT_FREQUENCY {100.000,300.000,100.000,100.000,100.000,100.000,100.000} \
   CONFIG.CLKOUT_USED {true,true,false,false,false,false,false} \
   CONFIG.USE_RESET {true} \
 ] [get_bd_cells clk_wizard_0]
 set_property CONFIG.RESET_TYPE {ACTIVE_LOW} [get_bd_cells clk_wizard_0]
-connect_bd_net [get_bd_pins CIPS_0/pl0_ref_clk] [get_bd_pins clk_wizard_0/clk_in1]
-connect_bd_net [get_bd_pins CIPS_0/pl0_resetn] [get_bd_pins clk_wizard_0/resetn]
-create_bd_cell -type ip -vlnv xilinx.com:ip:proc_sys_reset:5.0 proc_sys_reset_0
+
 proc create_hier_cell_vdu { parentCell nameHier } {
 
   variable script_folder
@@ -203,24 +194,16 @@ proc create_hier_cell_vdu { parentCell nameHier } {
   current_bd_instance $oldCurInst
 }
 create_hier_cell_vdu [current_bd_instance .] vdu
-connect_bd_net [get_bd_pins clk_wizard_0/clk_out1] [get_bd_pins proc_sys_reset_0/slowest_sync_clk]
-connect_bd_net [get_bd_pins vdu/s_axi_aresetn] [get_bd_pins proc_sys_reset_0/peripheral_aresetn]
-connect_bd_net [get_bd_pins smartconnect_0/aclk] [get_bd_pins clk_wizard_0/clk_out2]
-connect_bd_net [get_bd_pins smartconnect_0/aresetn] [get_bd_pins proc_sys_reset_0/interconnect_aresetn]
-connect_bd_intf_net [get_bd_intf_pins smartconnect_0/M00_AXI] -boundary_type upper [get_bd_intf_pins vdu/S_AXI_LITE]
-connect_bd_intf_net [get_bd_intf_pins smartconnect_0/M01_AXI] -boundary_type upper [get_bd_intf_pins vdu/S_AXI]
-connect_bd_intf_net [get_bd_intf_pins CIPS_0/M_AXI_FPD] [get_bd_intf_pins smartconnect_0/S00_AXI]
-disconnect_bd_net /ilconstant_0_dout [get_bd_pins CIPS_0/m_axi_fpd_aclk]
-connect_bd_net [get_bd_pins CIPS_0/m_axi_fpd_aclk] [get_bd_pins clk_wizard_0/clk_out1]
-delete_bd_objs [get_bd_nets clk_wizard_0_clk_out2]
-connect_bd_net [get_bd_pins proc_sys_reset_0/ext_reset_in] [get_bd_pins CIPS_0/pl0_resetn]
+set_property CONFIG.NUM_MI {7} [get_bd_cells ctrl_smc]
+connect_bd_intf_net [get_bd_intf_pins ctrl_smc/M05_AXI] -boundary_type upper [get_bd_intf_pins vdu/S_AXI_LITE]
+connect_bd_intf_net [get_bd_intf_pins ctrl_smc/M06_AXI] -boundary_type upper [get_bd_intf_pins vdu/S_AXI]
+connect_bd_net [get_bd_pins vdu/s_axi_aclk] [get_bd_pins clk_wizard_0/clk_out1]
+connect_bd_net [get_bd_pins vdu/mcu_dec_axi_aclk] [get_bd_pins clk_wizard_0/clk_out2]
+connect_bd_net [get_bd_pins vdu/s_axi_aresetn] [get_bd_pins rst_clk_wizard/peripheral_aresetn]
 connect_bd_net [get_bd_pins vdu/vdu_host_interrupt0] [get_bd_pins CIPS_0/pl_ps_irq0]
 connect_bd_net [get_bd_pins vdu/vdu_host_interrupt1] [get_bd_pins CIPS_0/pl_ps_irq1]
 connect_bd_net [get_bd_pins vdu/vdu_host_interrupt2] [get_bd_pins CIPS_0/pl_ps_irq2]
 connect_bd_net [get_bd_pins vdu/vdu_host_interrupt3] [get_bd_pins CIPS_0/pl_ps_irq3]
-connect_bd_net [get_bd_pins vdu/s_axi_aclk] [get_bd_pins clk_wizard_0/clk_out1]
-connect_bd_net [get_bd_pins vdu/mcu_dec_axi_aclk] [get_bd_pins clk_wizard_0/clk_out2]
-connect_bd_net [get_bd_pins smartconnect_0/aclk] [get_bd_pins clk_wizard_0/clk_out1]
 connect_bd_net [get_bd_pins vdu/ref_clk] [get_bd_pins CIPS_0/pl0_ref_clk]
 set_property CONFIG.NUM_SI {9} [get_bd_cells aggr_noc]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI] [get_bd_intf_pins aggr_noc/S00_AXI]
@@ -244,4 +227,5 @@ set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {50
 set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S07_AXI]
 set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500} } M03_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S08_AXI]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI8] [get_bd_intf_pins aggr_noc/S08_AXI]
-
+delete_bd_objs [get_bd_addr_segs CIPS_0/M_AXI_FPD/SEG_axi_bram_ctrl_0_Mem0]
+assign_bd_address -target_address_space /CIPS_0/M_AXI_FPD [get_bd_addr_segs vdu/vdu_0/S_AXI_LITE/Reg] -force
