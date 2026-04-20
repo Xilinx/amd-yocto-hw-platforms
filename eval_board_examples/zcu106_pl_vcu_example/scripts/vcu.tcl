@@ -1,5 +1,11 @@
 create_bd_cell -type ip -vlnv xilinx.com:ip:vcu:1.2 vcu_0
 set_property -dict [list \
+  CONFIG.ENC_BUFFER_EN {true} \
+  CONFIG.ENC_BUFFER_MANUAL_OVERRIDE {1} \
+  CONFIG.ENC_BUFFER_SIZE {2140} \
+  CONFIG.ENC_CODING_TYPE {1} \
+] [get_bd_cells vcu_0]
+set_property -dict [list \
   CONFIG.PSU__SAXIGP4__DATA_WIDTH {32} \
   CONFIG.PSU__USE__S_AXI_GP0 {1} \
   CONFIG.PSU__USE__S_AXI_GP1 {1} \
