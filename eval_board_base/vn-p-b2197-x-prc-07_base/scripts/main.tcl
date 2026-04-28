@@ -91,5 +91,5 @@ launch_runs impl_1 -to_step write_bitstream
 wait_on_run impl_1
 
 open_run impl_1
-write_hw_platform -fixed -include_bit -file $outputs_dir/${proj_name}.xsa
+write_hw_platform -fixed -include_bit -force -file $outputs_dir/${proj_name}.xsa
 validate_hw_platform -verbose $outputs_dir/${proj_name}.xsa
