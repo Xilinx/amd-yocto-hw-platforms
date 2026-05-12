@@ -66,12 +66,19 @@ close $fd
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
 
+# Add workaround to auto-generate constraints untill fixed in CED
+open_run synth_1 -name synth_1
+xphy::generate_constraints
+save_constraints
+
 launch_runs impl_1 -to_step write_bitstream
 
 wait_on_run impl_1
 
 open_run impl_1
-set_property lock true [get_noc_net_routes -of [get_noc_logical_path -filter initial_boot]]
+
+#logical paths are not tagged with initial_boot so remove filter and lock the paths
+set_property lock true [get_noc_net_routes -of [get_noc_logical_paths]]
 write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
 
 write_hw_platform -fixed -include_bit -file $outputs_dir/${proj_name}.xsa
