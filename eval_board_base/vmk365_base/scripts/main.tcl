@@ -29,6 +29,8 @@ instantiate_example_design -template xilinx.com:design:ext_platform_part:1.0 -de
 
 update_compile_order -fileset sources_1
 
+source ./scripts/config_bd.tcl
+
 save_bd_design
 validate_bd_design
 file mkdir $proj_dir/$proj_name/$output_dir
