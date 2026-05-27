@@ -1,13 +1,13 @@
 # Copyright (C) 2024, Advanced Micro Devices, Inc.
 # SPDX-License-Identifier: Apache-2.0
 
-
 set proj_name project_1
 set proj_dir ./hw_project
 set output_dir outputs
 set board vek280
 
 # parse arguments
+set noc_solution ""
 for { set i 0 } { $i < $argc } { incr i } {
   # proj name
   if { [lindex $argv $i] == "-proj_name" } {
@@ -19,9 +19,14 @@ for { set i 0 } { $i < $argc } { incr i } {
     incr i
     set jobs [lindex $argv $i]
   }
+  # noc solution file path
+  if { [lindex $argv $i] == "-noc_solution" } {
+    incr i
+    set noc_solution [lindex $argv $i]
+  }
  }
 	        
-create_project $proj_name $proj_dir/$proj_name -part xcve2802-vsvh1760-2MP-e-S
+create_project -force $proj_name $proj_dir/$proj_name -part xcve2802-vsvh1760-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
 set_property segmented_configuration true [current_project]
 create_bd_design "edf_base_pl" -mode batch
@@ -32,7 +37,11 @@ update_compile_order -fileset sources_1
 source ./scripts/vdu.tcl
 assign_bd_address
 save_bd_design
-validate_bd_design
+if { $noc_solution ne "" } {
+  puts "INFO: Reading NOC solution from: $noc_solution"
+  read_noc_solution $noc_solution
+}
+ validate_bd_design
 file mkdir $proj_dir/$proj_name/$output_dir
 
 set outputs_dir $proj_dir/$proj_name/$output_dir
@@ -49,7 +58,7 @@ if { $board_part != ""} {
 	puts $fd "BOARD: $board_part" 
 }
 
-set design_name [get_property NAME [get_bd_designs]]
+set design_name [get_property NAME [get_bd_design [current_bd_design]]]
 puts $fd "BLOCK DESIGN: $design_name" 
 
 
@@ -67,39 +76,13 @@ close $fd
 
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
-    
+
 launch_runs impl_1 -to_step write_bitstream
             
 wait_on_run impl_1
 
 open_run impl_1
 
-set_property lock true [get_noc_net_routes -of [get_noc_logical_path -filter {initial_boot == 1}]]
-set_property lock true [get_noc_net_routes -of [get_noc_logical_paths -of [get_noc_logical_instances *N?U128*]]]
 
-write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
-
-set_property platform.board_id $proj_name [current_project]
-            
-set_property platform.design_intent.datacenter false [current_project]
-            
-set_property platform.design_intent.embedded true [current_project]
-            
-set_property platform.design_intent.external_host false [current_project]
-            
-set_property platform.design_intent.server_managed false [current_project]
-            
-set_property platform.extensible true [current_project]
-            
-set_property platform.name $proj_name [current_project]
-            
-set_property platform.vendor "xilinx" [current_project]
-            
-set_property platform.version "1.0" [current_project]
-
-set_property platform.platform_state {impl} [current_project]
-
-set_property platform.uses_pr {true} [current_project]
-
-write_hw_platform -fixed $outputs_dir/${proj_name}.xsa
+write_hw_platform -fixed -include_bit -file $outputs_dir/${proj_name}.xsa
 validate_hw_platform -verbose $outputs_dir/${proj_name}.xsa

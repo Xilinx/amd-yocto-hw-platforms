@@ -7,6 +7,7 @@ SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 
 JOBS ?= 1
 PROJ_NAME ?= vek280_pl_vdu
+NOC_SOLUTION ?=
 
 VIV_PRJ_DIR = hw_project
 SDT_PRJ_DIR = hw_project_sdt
@@ -26,7 +27,9 @@ help:
 	@echo '    Generate the SDT files from XSA'
 	@echo '  make all'
 	@echo '    This will generate both XSA and SDT'
-	@echo 'Note you can pass Args JOBS and PROJ_NAME'
+	@echo 'Note you can pass Args JOBS, PROJ_NAME and NOC_SOLUTION'
+	@echo '  NOC_SOLUTION : path to NOC solution .ncr file (no spaces in path)'
+	@echo '  Example: make xsa NOC_SOLUTION=/tmp/edf_base_pl_noc_solution.ncr'
 	@echo ''
 
 .PHONY: all
@@ -34,7 +37,7 @@ all: xsa sdt
 
 xsa: $(VIV_XSA)
 $(VIV_XSA): $(VIV_SRC)
-	$(VIVADO) -mode batch -notrace -source $(VIV_SRC) -tclargs -jobs $(JOBS) -proj_name $(PROJ_NAME)
+	$(VIVADO) -mode batch -notrace -source $(VIV_SRC) -tclargs -jobs $(JOBS) -proj_name $(PROJ_NAME) $(if $(NOC_SOLUTION),-noc_solution $(NOC_SOLUTION),)
 
 sdt:
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
