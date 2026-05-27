@@ -48,7 +48,7 @@ if { $board_part != ""} {
 	puts $fd "BOARD: $board_part"
 }
 
-set design_name [get_property NAME [get_bd_designs]]
+set design_name [get_property NAME [get_bd_design [current_bd_design]]]
 puts $fd "BLOCK DESIGN: $design_name"
 
 
