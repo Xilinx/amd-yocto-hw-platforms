@@ -226,6 +226,7 @@ set_property -dict [list CONFIG.CONNECTIONS {M00_INI {read_bw {500} write_bw {50
 set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S06_AXI]
 set_property -dict [list CONFIG.CONNECTIONS {M04_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S07_AXI]
 set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500} } M03_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S08_AXI]
+set_property -dict [list CONFIG.CONNECTIONS {M01_INI {read_bw {500} write_bw {500} } M00_INI {read_bw {500} write_bw {500} }}] [get_bd_intf_pins /aggr_noc/S00_AXI]
 connect_bd_intf_net -boundary_type upper [get_bd_intf_pins vdu/M_AXI8] [get_bd_intf_pins aggr_noc/S08_AXI]
 delete_bd_objs [get_bd_addr_segs CIPS_0/M_AXI_FPD/SEG_axi_bram_ctrl_0_Mem0]
 assign_bd_address -target_address_space /CIPS_0/M_AXI_FPD [get_bd_addr_segs vdu/vdu_0/S_AXI_LITE/Reg] -force
