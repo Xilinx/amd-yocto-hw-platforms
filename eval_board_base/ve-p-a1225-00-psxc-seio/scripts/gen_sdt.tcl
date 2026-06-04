@@ -16,5 +16,5 @@ set_dt_param -zocl enable
 set_dt_param -dir ./hw_project_sdt
 set_dt_param -xsa $xsa_path
 set_dt_param -board_dts versal2-ve-p-a1225-00-reva
-set_dt_param -user_dts ./dts/x-prc-11-revA.dtsi
+set_dt_param -include_dts x-prc-11-reva.dtsi
 generate_sdt
