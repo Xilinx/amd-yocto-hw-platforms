@@ -63,7 +63,7 @@ endif
 gen_overlay: copy_files run_lopper run_dtc
 
 run_lopper:
-	LOPPER_DTC_FLAGS="-b 0 -@" $(LOPPER) --enhanced -O $(FWDIR) -f $(SDT_PRJ_DIR)/system-top.dts -- xlnx_overlay_dt cortexa78_0 full
+	LOPPER_DTC_FLAGS="-b 0 -@" $(LOPPER) --enhanced -O $(FWDIR) -f $(SDT_PRJ_DIR)/system-top.dts -- xlnx_overlay_dt cortexa78_0 full $(SDT_PRJ_DIR)/pl.dtsi
 
 run_dtc:
 	$(DTC) -I dts -O dtb -o $(FWDIR)/pl.dtbo $(FWDIR)/pl.dtsi
