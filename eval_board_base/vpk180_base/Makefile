@@ -16,6 +16,9 @@ VIV_XSA = $(VIV_PRJ_DIR)/*.xsa
 VIV_SRC = $(VIV_SCRIPTS_DIR)/main.tcl
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
+NOC_DT_SCRIPT = ../../linux-examples/noc-perf/generate_noc_dt.py
+NOC_RNPI = $(SDT_PRJ_DIR)/extracted/*/pdi_files/*_boot.rnpi
+
 .PHONY: help
 help:
 	@echo 'Usage:'
@@ -24,6 +27,8 @@ help:
 	@echo '    Generate vpk180 base XSA.'
 	@echo '  make sdt'
 	@echo '    Generate the SDT files from XSA'
+	@echo '  make gen_overlay_noc'
+	@echo '    Generate NoC perf Device Tree from the boot .rnpi file'
 	@echo '  make all'
 	@echo '    This will generate both XSA and SDT'
 	@echo 'Note you can pass Args JOBS and PROJ_NAME'
@@ -39,7 +44,10 @@ $(VIV_XSA): $(VIV_SRC)
 sdt:
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
 
+.PHONY: gen_overlay_noc
+gen_overlay_noc:
+	python3 $(NOC_DT_SCRIPT) $(NOC_RNPI)
+
 .PHONY: clean
 clean:
 	$(RM) $(VIV_PRJ_DIR) $(SDT_PRJ_DIR) vivado* .Xil *dynamic* *.log *.xpe
-

@@ -18,6 +18,9 @@ VIV_XSA = $(VIV_PRJ_DIR)/$(PROJ_NAME)/outputs/*.xsa
 VIV_SRC = $(VIV_SCRIPTS_DIR)/main.tcl
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
+NOC_DT_SCRIPT = ../../linux-examples/noc-perf/generate_noc_dt.py
+NOC_RNPI = $(SDT_PRJ_DIR)/extracted/*/pdi_files/*_boot.rnpi
+
 .PHONY: help
 help:
 	@echo 'Usage:'
@@ -26,6 +29,8 @@ help:
 	@echo '    Generate vrk160 base XSA.'
 	@echo '  make sdt'
 	@echo '    Generate the SDT files from XSA'
+	@echo '  make gen_overlay_noc'
+	@echo '    Generate NoC perf Device Tree from the boot .rnpi file'
 	@echo '  make all'
 	@echo '    This will generate both XSA and SDT'
 	@echo 'Note you can pass Args JOBS and PROJ_NAME'
@@ -42,6 +47,10 @@ sdt: $(PDI_FILE)
 $(PDI_FILE): $(SDTGEN_SRC)
 	$(SDTGEN) $(SDTGEN_SRC) -xsa_name $(PROJ_NAME)
 
+.PHONY: gen_overlay_noc
+gen_overlay_noc:
+	python3 $(NOC_DT_SCRIPT) $(NOC_RNPI)
+
 checkpdi: xsa sdt
 	@echo "compatibility check"; \
 	GOLDEN_UNIQUE_ID=$$(basename $(VIV_PRJ_DIR)/$(PROJ_NAME)/$(PROJ_NAME).srcs/utils_1/imports/golden_ncr/vrk160_*.ncr .ncr | grep -o '0x[0-9a-fA-F]\+' ); \
@@ -57,4 +66,3 @@ checkpdi: xsa sdt
 .PHONY: clean
 clean:
 	$(RM) $(VIV_PRJ_DIR) $(SDT_PRJ_DIR) vivado* .Xil *dynamic* *.log *.xpe
-
