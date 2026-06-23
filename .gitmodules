@@ -4,3 +4,6 @@
 [submodule "eval_board_examples/Vitis_Embedded_Platform_Source"]
 	path = eval_board_examples/Vitis_Embedded_Platform_Source
 	url = https://gitenterprise.xilinx.com/swm/Vitis_Embedded_Platform_Source.git
+[submodule "linux-examples"]
+	path = linux-examples
+	url = https://github.com/AMD-AECG-SSW-PUBLIC/linux-examples.git
