@@ -26,7 +26,6 @@ create_project $proj_name $proj_dir/$proj_name -part xczu49dr-ffvf1760-2-e
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "mpsoc_preset" -mode batch
 instantiate_example_design -template xilinx.com:design:mpsoc_preset:1.0 -design mpsoc_preset -options { Preset.VALUE MPSoC_PL}
-set_property segmented_configuration true [current_project]
 
 update_compile_order -fileset sources_1
 
