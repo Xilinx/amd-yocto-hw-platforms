@@ -25,7 +25,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 create_project $proj_name $proj_dir/$proj_name -part xc7s100fgga676-2
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "microblaze_v_preset" -mode batch
-instantiate_example_design -template xilinx.com:design:microblaze_v_preset:1.0 -design microblaze_v_preset -options { Preset.VALUE Application_Processor}
+instantiate_example_design -template xilinx.com:design:microblaze_v_preset:1.0 -design microblaze_v_preset -options { Preset.VALUE Linux_Profile}
 
 update_compile_order -fileset sources_1
 
