@@ -13,16 +13,12 @@ help:
 	@echo '    Generate the SDT files from XSA'
 	@echo '  make all'
 	@echo '    This will generate both XSA and SDT'
-	@echo 'Note Need to mandatory export SYSROOT BASE_XSA'
+	@echo 'Note Need to mandatory export BASE_XSA'
 	@echo 'Note you need to have vitis aie license to build this app'
 	@echo ''
 
 ifndef BASE_XSA
 $(error export BASE_XSA pointing xsa generated using any extensible ced platform)
-endif
-
-ifndef SYSROOT
-$(error  Download common tar from AMD downloads and install sdk.sh and export SYSROOT pointing platform specific sysroot)
 endif
 
 ifndef XILINX_VITIS
