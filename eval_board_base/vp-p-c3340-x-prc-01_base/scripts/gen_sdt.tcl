@@ -16,6 +16,6 @@ set_dt_param -debug enable
 set_dt_param -zocl enable
 set_dt_param -dir ./hw_project_sdt
 set_dt_param -xsa $xsa_path
-set_dt_param -board_dts versal-vp-p-c3340-00-reva
+set_dt_param -user_dts versal-vp-p-c3340-00-reva.dtsi
 set_dt_param -user_dts ./dts/versal-vp-p-c3340-00-revA-x-prc-01-revA.dtsi
 generate_sdt

@@ -12,9 +12,9 @@ for { set i 0 } { $i < $argc } { incr i } {
 
 set xsa_path ./hw_project/$xsa_name/outputs/$xsa_name.xsa
 
-sdtgen set_dt_param -debug enable
-sdtgen set_dt_param -zocl enable
-sdtgen set_dt_param -dir ./hw_project_sdt
-sdtgen set_dt_param -xsa $xsa_path
-sdtgen set_dt_param -board_dts versal-vrk160-reva
-sdtgen generate_sdt
+set_dt_param -debug enable
+set_dt_param -zocl enable
+set_dt_param -dir ./hw_project_sdt
+set_dt_param -xsa $xsa_path
+set_dt_param -user_dts versal-vrk160-reva.dtsi
+generate_sdt

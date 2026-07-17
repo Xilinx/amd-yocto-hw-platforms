@@ -14,5 +14,5 @@ for { set i 0 } { $i < $argc } { incr i } {
  set_dt_param -zocl enable
  set_dt_param -dir ./hw_project_sdt
  set_dt_param -xsa $xsa_path
- set_dt_param -board_dts versal-vek280-revb
+ set_dt_param -user_dts versal-vek280-revb.dtsi
  generate_sdt

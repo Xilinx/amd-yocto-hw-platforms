@@ -18,4 +18,3 @@ set_dt_param -dir ./hw_project_sdt
 set_dt_param -xsa $xsa_path
 set_dt_param -user_dts versal-vhk158-reva.dtsi
 generate_sdt
-copy_hw_files
