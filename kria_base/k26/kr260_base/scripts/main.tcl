@@ -25,7 +25,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 create_project $proj_name $proj_dir/$proj_name -part xck26-sfvc784-2LV-c
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "kria_starter_kit" -mode batch
-instantiate_example_design -template xilinx.com:design:kria_starter_kit:1.0 -design kria_starter_kit
+instantiate_example_design -template xilinx.com:design:kria_starter_kit:* -design kria_starter_kit
 
 update_compile_order -fileset sources_1
         

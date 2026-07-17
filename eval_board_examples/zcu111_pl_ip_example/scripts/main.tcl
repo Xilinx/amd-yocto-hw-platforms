@@ -8,11 +8,11 @@ set proj_name zcu111_pl_ip_example
 set proj_dir ./hw_project
 set output_dir outputs
 set board zcu111
-set board_part xilinx.com:$board:part0:2.0
+set board_part xilinx.com:$board:part0:*
 set device xczu28dr-ffvg1517-2-e
 #set rev None
 set my_design_name MPSoC_ext_platform
-set ced_template xilinx.com:design:MPSoC_ext_platform:1.0
+set ced_template xilinx.com:design:MPSoC_ext_platform:*
 #set output {xsa bit}
 #set xdc_list {xdc/default.xdc}
 #set ip_repo_path {}

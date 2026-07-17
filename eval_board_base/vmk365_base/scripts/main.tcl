@@ -24,7 +24,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 
 create_project $proj_name $proj_dir/$proj_name -part xc2vm3654-sfvb1440-1LHP-e-S
 create_bd_design "ext_platform_part" -mode batch
-instantiate_example_design -template xilinx.com:design:ext_platform_part:1.0 -design ext_platform_part -options { Include_AIE.VALUE false Include_DDR.VALUE true}
+instantiate_example_design -template xilinx.com:design:ext_platform_part:* -design ext_platform_part -options { Include_AIE.VALUE false Include_DDR.VALUE true}
 
 
 update_compile_order -fileset sources_1

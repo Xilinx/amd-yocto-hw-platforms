@@ -34,7 +34,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 create_project $proj_name $proj_dir/$proj_name -part xczu7ev-ffvc1156-2-e
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "MPSoC_ext_platform" -mode batch
-instantiate_example_design -template xilinx.com:design:MPSoC_ext_platform:1.0 -design MPSoC_ext_platform -options { Include_DDR.VALUE false}
+instantiate_example_design -template xilinx.com:design:MPSoC_ext_platform:* -design MPSoC_ext_platform -options { Include_DDR.VALUE false}
 #update_compile_order -fileset sources_1
 #
 update_compile_order -fileset sources_1

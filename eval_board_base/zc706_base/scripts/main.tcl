@@ -25,7 +25,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 create_project $proj_name $proj_dir/$proj_name -part xc7z045ffg900-2
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "zynq7000_preset" -mode batch
-instantiate_example_design -template xilinx.com:design:zynq7000_preset:1.0 -design zynq7000_preset -options { Preset.VALUE PS7_PL}
+instantiate_example_design -template xilinx.com:design:zynq7000_preset:* -design zynq7000_preset -options { Preset.VALUE PS7_PL}
 
 update_compile_order -fileset sources_1
 

@@ -25,7 +25,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 create_project $proj_name $proj_dir/$proj_name -part xc2vp3602-vsvc3340-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "edf_base_pl" -mode batch
-instantiate_example_design -template xilinx.com:design:edf_base_pl:1.0 -design edf_base_pl
+instantiate_example_design -template xilinx.com:design:edf_base_pl:* -design edf_base_pl
 
 update_compile_order -fileset sources_1
 

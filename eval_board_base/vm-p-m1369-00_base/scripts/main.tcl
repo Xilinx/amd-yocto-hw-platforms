@@ -24,7 +24,7 @@ for { set i 0 } { $i < $argc } { incr i } {
 
 create_project $proj_name $proj_dir/$proj_name -part xcvm2152-nfvm1369-1LP-e-S
 create_bd_design "vmpm1369_emb_base" -mode batch
-instantiate_example_design -template xilinx.com:design:vmpm1369_emb_base:1.0 -design vmpm1369_emb_base
+instantiate_example_design -template xilinx.com:design:vmpm1369_emb_base:* -design vmpm1369_emb_base
 
 update_compile_order -fileset sources_1
 #Segmented configuration
