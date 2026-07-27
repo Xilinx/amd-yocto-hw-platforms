@@ -16,6 +16,5 @@ set_dt_param -debug enable
 set_dt_param -zocl enable
 set_dt_param -dir ./hw_project_sdt
 set_dt_param -xsa $xsa_path
-set_dt_param -user_dts versal-vek280-revb.dtsi
-set_dt_param -user_dts ./dts/pl_custom.dtsi
+set_dt_param -user_dts versal-vek280-revb.dtsi ./dts/pl_custom.dtsi
 generate_sdt
