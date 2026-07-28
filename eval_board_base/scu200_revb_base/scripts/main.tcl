@@ -62,9 +62,6 @@ foreach ip [get_ips] {
 }
 
 close $fd
-# Configure to 64 bit
-set_property CONFIG.C_DATA_SIZE {64} [get_bd_cells microblaze_riscv_0]
-
 # Disable fast interrupts on the interrupt controller
 set_property CONFIG.C_HAS_FAST {0} [get_bd_cells microblaze_riscv_0_axi_intc]
 
