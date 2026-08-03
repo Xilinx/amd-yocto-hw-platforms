@@ -29,20 +29,23 @@ for { set i 0 } { $i < $argc } { incr i } {
   }
  }
 
-#create_project -name $proj_name -force -dir $proj_dir/$proj_name -part [get_property PART_NAME [get_board_parts $proj_board]]
-#set_property board_part $proj_board [current_project]
-create_project $proj_name $proj_dir/$proj_name -part xczu7ev-ffvc1156-2-e
+create_project -force $proj_name $proj_dir/$proj_name -part xczu7ev-ffvc1156-2-e
 set_property board_part xilinx.com:$board:part0:* [current_project]
 create_bd_design "MPSoC_ext_platform" -mode batch
 instantiate_example_design -template xilinx.com:design:MPSoC_ext_platform:* -design MPSoC_ext_platform -options { Include_DDR.VALUE false}
-#update_compile_order -fileset sources_1
-#
 update_compile_order -fileset sources_1
 
-#source pl vdu tcl
+#source vcu.tcl
 source ./scripts/vcu.tcl
+import_files -fileset constrs_1 $xdc_list
 assign_bd_address
 save_bd_design
+remove_files  ${proj_dir}/$proj_name/${proj_name}.srcs/sources_1/imports/hdl/MPSoC_ext_platform_wrapper.v
+file delete -force ${proj_dir}/$proj_name/${proj_name}.srcs/sources_1/imports/hdl/MPSoC_ext_platform_wrapper.v
+make_wrapper -files [get_files ${proj_dir}/$proj_name/${proj_name}.srcs/sources_1/bd/MPSoC_ext_platform/MPSoC_ext_platform.bd] -top
+add_files -norecurse ${proj_dir}/$proj_name/${proj_name}.gen/sources_1/bd/MPSoC_ext_platform/hdl/MPSoC_ext_platform_wrapper.v
+
+
 validate_bd_design
 file mkdir $proj_dir/$proj_name/$output_dir
 
