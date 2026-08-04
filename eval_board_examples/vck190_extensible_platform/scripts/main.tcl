@@ -7,6 +7,10 @@ set proj_name project_1
 set proj_dir ./hw_project
 set output_dir outputs
 set board vck190
+variable design_name
+set design_name vitis_design
+
+set noc_solution ""
 
 # parse arguments
 for { set i 0 } { $i < $argc } { incr i } {
@@ -20,17 +24,32 @@ for { set i 0 } { $i < $argc } { incr i } {
     incr i
     set jobs [lindex $argv $i]
   }
+  # noc solution file path
+  if { [lindex $argv $i] == "-noc_solution" } {
+    incr i
+    set noc_solution [lindex $argv $i]
+  }
  }
-	        
+
 create_project $proj_name $proj_dir/$proj_name -part xcvc1902-vsva2197-2MP-e-S
 set_property board_part xilinx.com:$board:part0:* [current_project]
 set_property segmented_configuration true [current_project]
-create_bd_design "edf_base" -mode batch
-instantiate_example_design -template xilinx.com:design:edf_base:* -design edf_base
-source scripts/update_bd.tcl
+
+# Emulation (hw_emu) prerequisite: Versal requires the TLM sim model.
+# Simulator defaults to XSim (Vivado built-in); no target_simulator override needed.
+set_property PREFERRED_SIM_MODEL "tlm" [current_project]
+
+create_bd_design $design_name -mode batch
+instantiate_example_design -template xilinx.com:design:base_ext_platform:1.0 -design $design_name
+
 update_compile_order -fileset sources_1
         
 save_bd_design
+if { $noc_solution ne "" } {
+  puts "INFO: Reading NOC solution from: $noc_solution"
+  read_noc_solution $noc_solution
+}
+
 validate_bd_design
 file mkdir $proj_dir/$proj_name/$output_dir
 
@@ -63,6 +82,21 @@ foreach ip [get_ips] {
 }
 
 close $fd
+
+# ---- Emulation (hw_emu) XSA ----
+# Generated before synthesis: the hw_emu platform only needs the block design
+# simulation model, not implementation. Mirrors the vck190_base flow.
+generate_target all [get_files -norecurse ${design_name}.bd]
+update_compile_order -fileset sources_1
+# If the NoC switch network (xlnoc.bd) is not auto-generated for sim, uncomment:
+#generate_switch_network_for_noc
+update_compile_order -fileset sim_1
+launch_simulation -scripts_only
+launch_simulation -step compile
+launch_simulation -step elaborate
+file mkdir $outputs_dir/hw_emu
+write_hw_platform -hw_emu -force $outputs_dir/hw_emu/${proj_name}_hw_emu.xsa
+validate_hw_platform -verbose $outputs_dir/hw_emu/${proj_name}_hw_emu.xsa
 
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
