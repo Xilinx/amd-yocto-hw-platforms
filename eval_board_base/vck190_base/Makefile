@@ -19,7 +19,7 @@ VIV_SRC = $(VIV_SCRIPTS_DIR)/main.tcl
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
 NOC_DT_SCRIPT = ../../linux-examples/noc-perf/generate_noc_dt.py
-NOC_RNPI = $(SDT_PRJ_DIR)/extracted/*/pdi_files/*_boot.rnpi
+NOC_RNPI = $(SDT_PRJ_DIR)/extracted/*/pdi_files/*_boot*.rnpi
 
 
 .PHONY: help
