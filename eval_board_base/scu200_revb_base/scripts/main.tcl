@@ -62,12 +62,6 @@ foreach ip [get_ips] {
 }
 
 close $fd
-# Disable fast interrupts on the interrupt controller
-set_property CONFIG.C_HAS_FAST {0} [get_bd_cells microblaze_riscv_0_axi_intc]
-
-# Re-validate and save the block design after configuration changes
-validate_bd_design
-save_bd_design
 
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
