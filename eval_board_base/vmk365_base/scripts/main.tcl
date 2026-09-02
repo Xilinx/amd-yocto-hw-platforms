@@ -22,14 +22,18 @@ for { set i 0 } { $i < $argc } { incr i } {
   }
  }
 
-create_project $proj_name $proj_dir/$proj_name -part xc2vm3654-sfvb1440-1LHP-e-S
-create_bd_design "ext_platform_part" -mode batch
-instantiate_example_design -template xilinx.com:design:ext_platform_part:* -design ext_platform_part -options { Include_AIE.VALUE false Include_DDR.VALUE true}
+create_project $proj_name $proj_dir/$proj_name -part xc2vm3654-sfvb1440-2MP-e-S
+set_property board_part xilinx.com:$board:part0:* [current_project]
+create_bd_design "edf_base" -mode batch
+instantiate_example_design -template xilinx.com:design:edf_base:* -design edf_base
 
+# Run custom tcl hooks post CED design
+if [file exist "./scripts/post_ced_config.tcl"] {
+	puts "Running Post CED Tcl hooks"
+	source ./scripts/post_ced_config.tcl
+}
 
 update_compile_order -fileset sources_1
-
-source ./scripts/config_bd.tcl
 
 save_bd_design
 validate_bd_design
@@ -68,19 +72,15 @@ close $fd
 launch_runs synth_1 -jobs $jobs
 wait_on_run synth_1
 
-# Add workaround to auto-generate constraints untill fixed in CED
-open_run synth_1 -name synth_1
-xphy::generate_constraints
-save_constraints
+#workaround to multi-gmio
+set_param noc.enableNOCClockGating false
 
 launch_runs impl_1 -to_step write_bitstream
 
 wait_on_run impl_1
 
 open_run impl_1
-
-#logical paths are not tagged with initial_boot so remove filter and lock the paths
-set_property lock true [get_noc_net_routes -of [get_noc_logical_paths]]
+set_property lock true [get_noc_net_routes -of [get_noc_logical_path -filter initial_boot]]
 write_noc_solution -file $outputs_dir/${design_name}_noc_solution.ncr
 
 write_hw_platform -fixed -include_bit -file $outputs_dir/${proj_name}.xsa
