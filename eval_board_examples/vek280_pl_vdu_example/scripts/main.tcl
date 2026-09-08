@@ -39,7 +39,8 @@ assign_bd_address
 save_bd_design
 if { $noc_solution ne "" } {
   puts "INFO: Reading NOC solution from: $noc_solution"
-  read_noc_solution $noc_solution
+  add_files -fileset utils_1 -norecurse $noc_solution
+  set_property NOC_SOLUTION_FILE $noc_solution [get_runs impl_1]
 }
  validate_bd_design
 file mkdir $proj_dir/$proj_name/$output_dir
