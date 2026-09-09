@@ -19,7 +19,7 @@ XSA_SRC = PVS_APEX_DEV/designs/ssw/psxc_seio
 VIV_SRC = run.tcl
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
-# Clone the apex xsa sources
+# Clone the ve-p-a1225-00 xsa sources
 get_xsa_source:
 	if [ ! -d "./PVS_APEX_DEV" ];then \
 		git clone git@gitenterprise.xilinx.com:SSAV/PVS_APEX_DEV.git; \
