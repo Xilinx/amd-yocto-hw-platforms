@@ -63,6 +63,10 @@ set_property -dict [list \
 
 # Create instance: vcu_ddr4_controller_0
 create_bd_cell -type ip -vlnv xilinx.com:ip:vcu_ddr4_controller:1.1 vcu_ddr4_controller_0
+set_property -dict [list \
+  CONFIG.ADDN_UI_CLKOUT2_FREQ_HZ {300} \
+  CONFIG.C0.DDR4_InputClockPeriod {7998} \
+] [get_bd_cells vcu_ddr4_controller_0]
 
 # Create instance: smartconnect_0, and set properties
 create_bd_cell -type ip -vlnv xilinx.com:ip:smartconnect:1.0 smartconnect_0
