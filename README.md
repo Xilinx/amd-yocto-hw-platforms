@@ -33,7 +33,7 @@ This repository supports the following platforms and their respective examples:
     4. scu35_base
     5. sp701_base
     6. vck190_base
-    7. ve-p-a1225-00-psxc-seio
+    7. ve-p-a1225-00-psxc-eio
     8. vek280_base
     9. vek385_base
     10. vek385_revb_base

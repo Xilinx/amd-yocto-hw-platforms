@@ -7,24 +7,24 @@ SDTGEN = $(XILINX_VIVADO)/bin/sdtgen
 BOOTGEN = $(XILINX_VIVADO)/bin/bootgen
 
 JOBS ?= 1
-PROJ_NAME ?= ps_noc_seio_3mc
+PROJ_NAME ?= ps_noc_eio_3mc
 
-VIV_PRJ_DIR = ps_noc_seio_3mc
+VIV_PRJ_DIR = ps_noc_eio_3mc
 SDT_PRJ_DIR = hw_project_sdt
 PDI_FILE = $(SDT_PRJ_DIR)/*boot.pdi
 VIV_SCRIPTS_DIR = scripts
 
 VIV_XSA = $(VIV_PRJ_DIR)/*.xsa
-XSA_SRC = PVS_APEX_DEV/designs/ssw/psxc_seio
+XSA_SRC = PVS_VE-P-A1225-00_DEV/designs/ssw/psxc_eio
 VIV_SRC = run.tcl
 SDTGEN_SRC = $(VIV_SCRIPTS_DIR)/gen_sdt.tcl
 
 # Clone the ve-p-a1225-00 xsa sources
 get_xsa_source:
-	if [ ! -d "./PVS_APEX_DEV" ];then \
-		git clone git@gitenterprise.xilinx.com:SSAV/PVS_APEX_DEV.git; \
+	if [ ! -d "./PVS_VE-P-A1225-00_DEV" ];then \
+		git clone git@gitenterprise.xilinx.com:SSAV/PVS_VE-P-A1225-00_DEV.git; \
 	fi
-	cd PVS_APEX_DEV && git pull && git log -n1 --pretty=oneline;
+	cd PVS_VE-P-A1225-00_DEV && git pull && git log -n1 --pretty=oneline;
 
 .PHONY: help
 help:
